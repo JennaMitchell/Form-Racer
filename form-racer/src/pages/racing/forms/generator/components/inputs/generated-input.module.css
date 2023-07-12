@@ -1,0 +1,113 @@
+.inputTopContainer {
+  width: max(300px, 300px);
+  height: max-content;
+  max-height: max-content;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.generatedInputQuestionContainer {
+  width: max(100%, 100%);
+  height: max-content;
+  max-height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--black);
+  padding: 25px 25px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px white;
+  border: 1px solid white;
+  z-index: 4;
+  position: relative;
+}
+.generatedInputContainer {
+  width: max(100%, 100%);
+  height: max-content;
+  max-height: max-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+.inputLabel {
+  left: -10px;
+  top: -10px;
+  font-size: var(--r12);
+  position: absolute;
+  transition: all 0.5s;
+  padding: 1.5px;
+  background-color: var(--main800);
+}
+.labelMovedOut {
+  font-size: var(--r10);
+  left: 5px;
+  top: -7.5px;
+  transform: translateY(0%);
+  background-color: var(--main800);
+}
+
+.generatedLabel {
+  max-width: max-content;
+  max-height: max-content;
+  box-sizing: border-box;
+  padding: 1px 2.5px;
+
+  color: var(--black);
+  position: absolute;
+
+  transition: all 0.5s;
+}
+.generatedInput {
+  width: max(100%, 100%);
+  height: max-content;
+  max-height: max-content;
+  font-size: var(--r16);
+
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+.generatedInput:focus {
+  outline: solid;
+  outline-color: var(--main100);
+}
+.generatedInputQuestionNumber {
+  position: absolute;
+  top: -10px;
+  left: 5px;
+  font-family: var(--mainFamilyFont);
+  font-size: var(--r12);
+  line-height: var(--r12);
+  color: var(--black);
+  background-color: var(--main800);
+  padding: 5px 7.5px;
+  width: max-content;
+  max-height: max-content;
+  max-height: max-content;
+}
+
+.generatedInputQuestion {
+  font-family: var(--mainFamilyFont);
+  font-size: var(--r12);
+  line-height: var(--r12);
+  color: var(--white);
+
+  width: max(100%, 100%);
+  max-height: max-content;
+  max-height: max-content;
+  z-index: 1000;
+}
+.triggerAnimation {
+  top: calc(100vh - 400px);
+}
+.hideQuestion {
+  opacity: 0;
+}

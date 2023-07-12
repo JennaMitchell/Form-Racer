@@ -1,0 +1,12 @@
+.astroidImageContainer {
+  width: max(180%, 180%);
+  height: max(400%, 400%);
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.astroidImage {
+  width: max(100%, 100%);
+  height: max(100%, 100%);
+}

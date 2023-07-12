@@ -1,0 +1,45 @@
+.racingMainBackdrop {
+  width: max(
+    calc(100vw - var(--scrollbar-width)),
+    calc(100vw - var(--scrollbar-width))
+  );
+  height: max(100vh, 100vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0px;
+  background-color: black;
+  background-size: contain;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.racingMainContainer {
+  width: max(1000px, 1000px);
+  height: max-content;
+  max-height: max-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+  gap: 20px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 0px;
+}
+.deleteThis {
+  position: fixed;
+  width: max(100%, 100);
+  top: 25px;
+  left: 25px;
+  z-index: 10000;
+  background-color: white;
+  color: black;
+}

@@ -1,0 +1,85 @@
+.generatedColorInput {
+  width: max(300px, 300px);
+  max-height: max-content;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: var(--black);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px white;
+  border: 1px solid white;
+}
+.questionLabel {
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  width: max-content;
+  max-width: max-content;
+  padding: 2.5px 7.5px;
+  background-color: var(--main800);
+  color: var(--black);
+  font-size: var(--r12);
+}
+.questionColorWindow {
+  width: max(100%, 100%);
+  height: max(150px, 150px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--white);
+  padding: 10px;
+}
+.questionColorCircleOne,
+.questionColorCircleTwo {
+  width: max(100px, 100px);
+  height: max(100px, 100px);
+  border-radius: 50%;
+}
+.questionColorCircleOne {
+  background-color: #ff0000;
+}
+.questionColorCircleTwo {
+  background-color: #008000;
+}
+.questionPlusIcon {
+  color: var(--black);
+  font-size: var(--r22);
+  line-height: var(--r22);
+  width: max-content;
+}
+
+.questionAnswersContainer {
+  width: max(100%, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.colorInputContainer {
+  width: max(100%, 100%);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.colorInputLabel {
+  color: var(--white);
+  font-size: var(--r12);
+  line-height: var(--r12);
+  width: max-content;
+}
+.colorInput {
+  border: 2px solid var(--white);
+  border-radius: 5px;
+}
+.colorInput:focus {
+  border: 2px solid var(--main800);
+}
+.colorInputContainerActive {
+  border: 4px solid var(--main800);
+}

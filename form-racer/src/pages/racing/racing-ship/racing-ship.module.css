@@ -1,0 +1,21 @@
+.shipContainer {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  width: max(100px, 100px);
+  height: max(100px, 100px);
+  display: relative;
+  transition: left 1s;
+  transform: translateX(-50%);
+}
+.racerBody {
+  width: max(60%, 60%);
+  height: max(50%, 50%);
+}
+
+.shipMoveRight {
+  left: calc(50% + 10px);
+}
+.shipMoveLeft {
+  left: calc(50% - 10px);
+}
