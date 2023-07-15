@@ -166,7 +166,9 @@ const GeneratedInput = ({
 
         dispatch(formStoreActions.setFireShipWeapons(true));
       } else if (!valueCorrect?.enterPressed && valueCorrect?.patternMet) {
-        setSubmitMessageActive(true);
+        if (!submitMessageActive) {
+          setSubmitMessageActive(true);
+        }
       } else if (!valueCorrect?.enterPressed && !valueCorrect?.patternMet) {
         if (submitMessageActive) {
           setSubmitMessageActive(false);
@@ -245,16 +247,16 @@ const GeneratedInput = ({
             {label}
           </label>
           <input
-            {...inputProps}
             className={classes.generatedInput}
             id={id}
-            maxLength={10}
+            maxLength={inputProps.max}
             ref={inputRef}
             onClick={usernameInputClickElementsHandler}
             onBlur={blurErrorHandler}
             key={`${id}-${label}-input-key`}
-            min={5}
-            max={10}
+            min={inputProps.min}
+            max={inputProps.max}
+            type={inputProps.type}
             onChange={inputChangeHandler}
             onKeyUp={keyUpHandler}
           />

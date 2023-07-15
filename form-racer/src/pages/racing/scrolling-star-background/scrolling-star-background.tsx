@@ -26,7 +26,7 @@ const ScrollingStarBackground = () => {
       backgroundScrollContainerOne.current.style.top = `${0}px`;
       backgroundScrollContainerTwo.current.style.top = `${viewportHeight}px`;
     }
-  }, []);
+  }, [viewportHeight]);
 
   useEffect(() => {
     const downwardMovementInterval = setInterval(() => {

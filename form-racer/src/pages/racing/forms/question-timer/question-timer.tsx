@@ -33,7 +33,9 @@ const QuestionTimerWindow = (): JSX.Element => {
   const userAnswersArray = useAppSelector(
     (state) => state.formRacing.userAnswersArray
   );
-
+  const endOfTestReached = useAppSelector(
+    (state) => state.formRacing.endOfTestReached
+  );
   const failedQuestionHandler = useCallback(() => {
     decreaseLivesTracker(dispatch, activeLivesArray);
     const newPossibleActiveQuestion = activeQuestionNumber + 1;
@@ -90,6 +92,12 @@ const QuestionTimerWindow = (): JSX.Element => {
     astroidExplosionTriggered,
     gameSettings,
   ]);
+
+  useEffect(() => {
+    if (endOfTestReached) {
+      setQuestionTimeRemaining(gameSettings.timePerQuestionInSeconds);
+    }
+  }, [endOfTestReached, gameSettings.timePerQuestionInSeconds]);
 
   return (
     <div

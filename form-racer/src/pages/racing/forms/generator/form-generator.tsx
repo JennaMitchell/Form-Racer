@@ -77,6 +77,8 @@ const FormGeneratorMainPage = (): JSX.Element => {
     });
     dispatch(formStoreActions.setGeneratedQuestionData(generatedDataArray));
     dispatch(formStoreActions.setUserAnswersArray(userAnswerArray));
+    dispatch(formStoreActions.setResetTestTimer(true));
+    dispatch(formStoreActions.setTestStarted(true));
   };
 
   const numberOfQuestionsPerTypeGenerator = (

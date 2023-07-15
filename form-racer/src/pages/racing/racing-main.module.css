@@ -43,3 +43,19 @@
   background-color: white;
   color: black;
 }
+.homeWorldImage {
+  width: max(200px, 200px);
+  height: max(200px, 200px);
+  position: fixed;
+  top: -300px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 10s;
+  z-index: 9;
+}
+.homeWorldMoveIn {
+  top: 50%;
+}
+.homeWorldFadeOut {
+  opacity: 0;
+}

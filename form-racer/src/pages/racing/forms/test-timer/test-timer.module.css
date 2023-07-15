@@ -1,21 +1,21 @@
-.questionTimerTopContainer {
+.testTimerContainer {
   width: max(220px, 220px);
   padding: 20px 20px;
   border: 1px solid white;
   border-radius: 10px;
   position: fixed;
-  top: 250px;
+  top: 150px;
   left: 50px;
   color: white;
   transition: border 1s, color 1s;
 }
-.questionTime {
+.testTimerTime {
   font-size: var(--r22);
   line-height: var(--r22);
   color: inherit;
   font-family: var(--mainFamilyFont);
 }
-.questionTimerLabel {
+.testTimerLabel {
   position: absolute;
   top: 0px;
   left: 5px;
@@ -28,12 +28,4 @@
   max-height: max-content;
   padding: 2.5px 10px;
   background-color: black;
-}
-.questionTimeCautionContainer {
-  border: 1px solid yellow;
-  color: yellow;
-}
-.questionTimeWarningContainer {
-  border: 1px solid red;
-  color: red;
 }

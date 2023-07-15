@@ -62,6 +62,7 @@ interface State {
   userFailedGame: boolean;
   activeQuestionNumber: number;
   activeQuestionNumberUpdated: boolean;
+  startTest: boolean;
 
   endOfTestReached: boolean;
   startQuestionTimer: boolean;
@@ -70,6 +71,11 @@ interface State {
   fireShipWeapon: boolean;
   astroidDestroyed: boolean;
   questionFailed: boolean;
+  resetTestTimer: boolean;
+  completionTime: number;
+  testStarted: boolean;
+  homeWorldAnimationComplete: boolean;
+  shipReturnedAnimationComplete: boolean;
 }
 
 const initialState: State = {
@@ -79,7 +85,7 @@ const initialState: State = {
   userFailedGame: false,
   activeQuestionNumber: 1,
   activeQuestionNumberUpdated: false,
-
+  startTest: false,
   endOfTestReached: false,
   startQuestionTimer: false,
   astroidExplosionTriggered: false,
@@ -87,6 +93,11 @@ const initialState: State = {
   fireShipWeapon: false,
   astroidDestroyed: false,
   questionFailed: false,
+  resetTestTimer: false,
+  completionTime: 0,
+  testStarted: false,
+  homeWorldAnimationComplete: false,
+  shipReturnedAnimationComplete: false,
 };
 
 export const formStoreSlice = createSlice({
@@ -111,6 +122,9 @@ export const formStoreSlice = createSlice({
     setActiveQuestionNumberUpdated(state, { payload }) {
       state.activeQuestionNumberUpdated = payload;
     },
+    setStartTest(state, { payload }) {
+      state.startTest = payload;
+    },
 
     setEndOfTestReached(state, { payload }) {
       state.endOfTestReached = payload;
@@ -129,6 +143,22 @@ export const formStoreSlice = createSlice({
     },
     setAstroidDestroyed(state, { payload }) {
       state.astroidDestroyed = payload;
+    },
+
+    setResetTestTimer(state, { payload }) {
+      state.resetTestTimer = payload;
+    },
+    setCompletionTime(state, { payload }) {
+      state.completionTime = payload;
+    },
+    setTestStarted(state, { payload }) {
+      state.testStarted = payload;
+    },
+    setHomeWorldAnimationComplete(state, { payload }) {
+      state.homeWorldAnimationComplete = payload;
+    },
+    setShipReturnedAnimationComplete(state, { payload }) {
+      state.shipReturnedAnimationComplete = payload;
     },
   },
 });

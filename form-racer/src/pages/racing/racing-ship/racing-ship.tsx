@@ -34,13 +34,19 @@ const RacingShipContainer = () => {
   const fireShipWeapons = useAppSelector(
     (state) => state.formRacing.fireShipWeapon
   );
+  const [returnShipHome, setReturnShipHome] = useState(false);
   const [weaponFireDestroyedAstroid, setWeaponFireDestroyedAstroid] =
     useState(false);
 
   const activeQuestionNumberUpdated = useAppSelector(
     (state) => state.formRacing.activeQuestionNumberUpdated
   );
-
+  const shipReturnedAnimationComplete = useAppSelector(
+    (state) => state.formRacing.shipReturnedAnimationComplete
+  );
+  const homeWorldAnimationComplete = useAppSelector(
+    (state) => state.formRacing.homeWorldAnimationComplete
+  );
   /// Handeling the Collision between the ship fired Weapon and the
 
   const astroidWeaponFireCollisionHandler = useCallback(() => {
@@ -134,25 +140,42 @@ const RacingShipContainer = () => {
     }
   }, [endOfTestReached, userFailedTest, dispatch]);
 
+  useEffect(() => {
+    if (endOfTestReached && !userFailedTest && homeWorldAnimationComplete) {
+      setReturnShipHome(true);
+      const returnShipAnimationTimeOut = setTimeout(() => {
+        dispatch(formStoreActions.setShipReturnedAnimationComplete(true));
+      }, 2500);
+
+      return () => {
+        clearTimeout(returnShipAnimationTimeOut);
+      };
+    }
+  }, [endOfTestReached, userFailedTest, dispatch, homeWorldAnimationComplete]);
+
   return (
     <div
       className={`${classes.shipContainer} ${
         racerTopContainerShakePosition === "right" && classes.shipMoveRight
       }  ${racerTopContainerShakePosition === "left" && classes.shipMoveLeft}
+      ${returnShipHome && classes.returnShipHome}
+      ${shipReturnedAnimationComplete && classes.hideShip}
    `}
     >
       {endOfTestReached && userFailedTest && <ShipExplosion />}
 
-      {!endOfTestReached && !userFailedTest && (
-        <>
-          <img
-            className={classes.shipHull}
-            src={racerData[userSelectedRacerNumber].racerBody}
-            alt="ship racer hull"
-          />
-          <RacingShipEngines />
-        </>
-      )}
+      {endOfTestReached &&
+        !userFailedTest &&
+        !shipReturnedAnimationComplete && (
+          <>
+            <img
+              className={classes.shipHull}
+              src={racerData[userSelectedRacerNumber].racerBody}
+              alt="ship racer hull"
+            />
+            <RacingShipEngines />
+          </>
+        )}
       <ShipMissilesAnimation fireShipMissle={fireShipWeapons} />
     </div>
   );

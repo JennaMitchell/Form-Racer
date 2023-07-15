@@ -39,16 +39,18 @@ export const enterPressHandler = (
   userLivesArray: boolean[]
 ) => {
   const keyCode = event.key;
+  console.log(keyCode);
   if (inputValue) {
     const regexPattern = new RegExp(pattern);
     const patternMet = regexPattern.test(inputValue);
+    console.log(patternMet);
 
     if (keyCode === "Enter" && patternMet) {
       return { enterPressed: true, patternMet: true };
     } else if (!patternMet && keyCode === "Enter") {
       decreaseLivesTracker(dispatch, userLivesArray);
       return { enterPressed: false, patternMet: false };
-    } else {
+    } else if (keyCode !== "Enter" && patternMet) {
       return { enterPressed: false, patternMet: true };
     }
   }
