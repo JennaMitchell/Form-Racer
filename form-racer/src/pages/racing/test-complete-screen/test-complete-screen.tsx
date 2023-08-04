@@ -6,6 +6,9 @@ import {
 } from "../../../store/typescript-hooks";
 
 import { formStoreActions } from "../../../store/form-store";
+import ScoreSubmitter from "./score-submitter/score-submitter";
+import AnimatedLeaderboard from "../leaderboards/animated-leaderboard/animated-leaderboard";
+import { testResetFunction } from "../../../assets/test-functions/test-function";
 const TestCompleteScreen = (): JSX.Element => {
   const username = useAppSelector((state) => state.userInfo.username);
   const testCompletionTime = useAppSelector(
@@ -17,6 +20,9 @@ const TestCompleteScreen = (): JSX.Element => {
   );
 
   const [currentAnimationPhase, setCurrentAnimationPhase] = useState(0);
+  const [userEnteredUsername, setUserEnteredUsername] = useState("");
+  const [submitUserScoreWindowActive, setSubmitUserScoreWindowActive] =
+    useState(false);
   const secondsToMinutesAndHoursConvertor = useCallback(
     (timeInSeconds: number) => {
       let numberOfSeconds = timeInSeconds;
@@ -93,10 +99,13 @@ const TestCompleteScreen = (): JSX.Element => {
             setTypingInterval(0);
           }
         }
-      }, 300);
+      }, 150);
       return () => {
         clearTimeout(animationTimeoutInterval);
       };
+    } else if (animationEnd && shipReturnedAnimationComplete) {
+      setCurrentAnimationPhase(4);
+      setSubmitUserScoreWindowActive(true);
     }
   }, [
     animationEnd,
@@ -113,7 +122,7 @@ const TestCompleteScreen = (): JSX.Element => {
     if (!animationEnd) {
       const flashInterval = setTimeout(() => {
         setFlashTypeBar(!flashTypeBar);
-      }, 250);
+      }, 150);
 
       return () => {
         clearTimeout(flashInterval);
@@ -127,12 +136,23 @@ const TestCompleteScreen = (): JSX.Element => {
     if (endOfTestReached) {
       const homePlanetAnimationTimeOut = setTimeout(() => {
         dispatch(formStoreActions.setHomeWorldAnimationComplete(true));
-      }, 10000);
+      }, 5000);
       return () => {
         return clearTimeout(homePlanetAnimationTimeOut);
       };
     }
   }, [endOfTestReached, dispatch]);
+
+  // user submitting score
+
+  const userSubmitInputHandler = (enteredUsername: string) => {
+    setSubmitUserScoreWindowActive(false);
+    setUserEnteredUsername(enteredUsername);
+  };
+
+  const tryAgainButtonHandler = () => {
+    testResetFunction(dispatch);
+  };
 
   return (
     <div className={classes.testCompleteMainContainer}>
@@ -184,7 +204,30 @@ const TestCompleteScreen = (): JSX.Element => {
           )}
         </div>
       )}
-      <button className={classes.playAgainButton}>Try Again ?</button>
+      {shipReturnedAnimationComplete &&
+        currentAnimationPhase === 4 &&
+        submitUserScoreWindowActive && (
+          <ScoreSubmitter scoreSubmitHandler={userSubmitInputHandler} />
+        )}
+      {shipReturnedAnimationComplete &&
+        currentAnimationPhase === 4 &&
+        !submitUserScoreWindowActive && (
+          <button
+            className={classes.playAgainButton}
+            onClick={tryAgainButtonHandler}
+          >
+            Try Again ?
+          </button>
+        )}
+
+      {shipReturnedAnimationComplete &&
+        currentAnimationPhase === 4 &&
+        !submitUserScoreWindowActive && (
+          <AnimatedLeaderboard
+            submittedUsername={userEnteredUsername}
+            usersTimeInSeconds={testCompletionTime}
+          />
+        )}
     </div>
   );
 };

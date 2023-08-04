@@ -25,14 +25,16 @@ const ShipMissilesAnimation = ({
   const activeWeaponIndex = useAppSelector(
     (state) => state.userInfo.activeWeaponIndex
   );
-
+  const weaponFireDestroyedAstroid = useAppSelector(
+    (state) => state.formRacing.weaponFireDestroyedAstroid
+  );
   return (
     <img
       src={weaponMissilesArray[activeWeaponIndex]}
       alt={`weapon fire ${activeWeaponIndex}`}
       className={`${classes.shipMissileImage} ${
         fireShipMissle && classes.fireShipMissle
-      }`}
+      } ${weaponFireDestroyedAstroid && classes.hideWeapons}`}
       id="fired_weapons_image"
     />
   );

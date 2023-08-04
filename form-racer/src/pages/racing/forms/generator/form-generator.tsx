@@ -21,6 +21,7 @@ import { randomNumberGeneratorWithNumberOfQuestionRemaining } from "../../../../
 import { sliderDataRefactorer } from "../../../../assets/api-calls/sql-data-refactors/slider-data-refactorer";
 import { useEffect } from "react";
 import { updateActiveQuestionNumber } from "./components/shared-components-functions";
+import { acceptedQuestionDatabaseObject } from "../../../../assets/constants/constants";
 
 const FormGeneratorMainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -43,196 +44,9 @@ const FormGeneratorMainPage = (): JSX.Element => {
   const astroidExplosionTriggered = useAppSelector(
     (state) => state.formRacing.astroidExplosionTriggered
   );
+  const startTest = useAppSelector((state) => state.formRacing.startTest);
 
-  const generateGameData = async () => {
-    const generatedGameData = {
-      timeDurationInSeconds: 0,
-      generatedQuestions: {},
-    };
-    switch (userGameSettings.difficulty) {
-      case "easy":
-        generatedGameData.timeDurationInSeconds = 1000;
-        break;
-      case "medium":
-        generatedGameData.timeDurationInSeconds = 500;
-        break;
-      case "hard":
-        generatedGameData.timeDurationInSeconds = 200;
-        break;
-      default:
-        break;
-    }
-
-    const generatedNumberOfQuestionsPerType = numberOfQuestionsPerTypeGenerator(
-      userGameSettings.numberOfQuestions,
-      userGameSettings.selectedQuestionTypes
-    );
-
-    const generatedDataArray = await questionDataRetriever(
-      generatedNumberOfQuestionsPerType,
-      userGameSettings.selectedQuestionTypes
-    );
-    const userAnswerArray = generatedDataArray.map(() => {
-      return "";
-    });
-    dispatch(formStoreActions.setGeneratedQuestionData(generatedDataArray));
-    dispatch(formStoreActions.setUserAnswersArray(userAnswerArray));
-    dispatch(formStoreActions.setResetTestTimer(true));
-    dispatch(formStoreActions.setTestStarted(true));
-  };
-
-  const numberOfQuestionsPerTypeGenerator = (
-    numberOfQuestions: number,
-    questionTypeArray: string[]
-  ) => {
-    let numberOfQuestionsRemaining = numberOfQuestions;
-
-    const numberOfQuestionsPerQuestionArray = [];
-    for (
-      let indexOfSelectedQuestionTypes = 0;
-      indexOfSelectedQuestionTypes < questionTypeArray.length;
-      indexOfSelectedQuestionTypes++
-    ) {
-      if (indexOfSelectedQuestionTypes === questionTypeArray.length - 1) {
-        numberOfQuestionsPerQuestionArray.push(numberOfQuestionsRemaining);
-      } else {
-        const randomlyGeneratedNumber =
-          randomNumberGeneratorWithNumberOfQuestionRemaining(
-            numberOfQuestionsRemaining
-          );
-        numberOfQuestionsRemaining =
-          numberOfQuestionsRemaining - randomlyGeneratedNumber;
-        numberOfQuestionsPerQuestionArray.push(randomlyGeneratedNumber);
-      }
-    }
-    return numberOfQuestionsPerQuestionArray;
-  };
-
-  const questionDataRetriever = async (
-    arrayOfQuestionNumbers: number[],
-    arrayOfQuestionTypes: string[]
-  ) => {
-    let generatedDataArray: any[] = [];
-
-    for (
-      let indexOfArrayQuestionNumbers = 0;
-      indexOfArrayQuestionNumbers < arrayOfQuestionNumbers.length;
-      indexOfArrayQuestionNumbers++
-    ) {
-      const questionType = arrayOfQuestionTypes[indexOfArrayQuestionNumbers];
-      const apiCallLinks = {
-        inputs: "input_data",
-        mulitpleChoice: "multiple_choice_data",
-        date: "date_data",
-        color: "color_questions",
-        checkBox: "checkbox_questions",
-        slider: "slider_questions",
-      };
-
-      switch (questionType) {
-        case "multiple choice":
-          const retrievedData = await getQuestionDataWithLimit(
-            apiCallLinks.mulitpleChoice,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-
-          const renderReadyInputData =
-            multipleChoiceDataRefactorer(retrievedData);
-
-          generatedDataArray = generatedDataArray.concat(renderReadyInputData);
-
-          break;
-        case "dates":
-          const retrievedDatesData = await getQuestionDataWithLimit(
-            apiCallLinks.date,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-          const renderReadyDateData = dateDataRefactorer(retrievedDatesData);
-
-          generatedDataArray = generatedDataArray.concat(renderReadyDateData);
-          break;
-        case "inputs":
-          const retrievedInputData = await getQuestionDataWithLimit(
-            apiCallLinks.inputs,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-
-          const renderReadyInputsData = inputDataRefactor(retrievedInputData);
-
-          generatedDataArray = generatedDataArray.concat(renderReadyInputsData);
-          break;
-        case "color":
-          const retrievedColorData = await getQuestionDataWithLimit(
-            apiCallLinks.color,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-          const renderReadyRetrievedColorData =
-            colorDataRefactor(retrievedColorData);
-
-          generatedDataArray = generatedDataArray.concat(
-            renderReadyRetrievedColorData
-          );
-          break;
-
-        case "check box":
-          const checkBoxData = await getQuestionDataWithLimit(
-            apiCallLinks.checkBox,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-          const renderReadyCheckboxData = checkboxDataRefactor(checkBoxData);
-
-          generatedDataArray = generatedDataArray.concat(
-            renderReadyCheckboxData
-          );
-
-          break;
-
-        case "slider":
-          const retrievedSliderData = await getQuestionDataWithLimit(
-            apiCallLinks.slider,
-            arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
-          );
-          const renderReadySliderData =
-            sliderDataRefactorer(retrievedSliderData);
-
-          generatedDataArray = generatedDataArray.concat(renderReadySliderData);
-          break;
-        default:
-          break;
-      }
-    }
-    return generatedDataArray;
-  };
-
-  const getQuestionDataWithLimit = async (
-    apiRoute: string,
-    numberOfQuestions: number
-  ) => {
-    const retrievedDateData = await getAllQuestionDataWithLimit(
-      apiRoute,
-      numberOfQuestions
-    );
-
-    if (retrievedDateData.errorPresent) {
-      dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-      dispatch(
-        popupsStoreActions.setServerMessageData({
-          message: `${retrievedDateData.data}`,
-          messageType: "error",
-        })
-      );
-    } else {
-      dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-      dispatch(
-        popupsStoreActions.setServerMessageData({
-          message: `Data Retrieved`,
-          messageType: "success",
-        })
-      );
-
-      return retrievedDateData.data;
-    }
-  };
+  const testStarted = useAppSelector((state) => state.formRacing.testStarted);
 
   useEffect(() => {
     if (astroidDestroyed && astroidExplosionTriggered) {
@@ -254,19 +68,216 @@ const FormGeneratorMainPage = (): JSX.Element => {
     astroidExplosionTriggered,
   ]);
 
+  // Use Effect to Generate New Data
+
+  useEffect(() => {
+    if (startTest && !testStarted) {
+      const generateGameData = async () => {
+        const generatedGameData = {
+          timeDurationInSeconds: 0,
+          generatedQuestions: {},
+        };
+        switch (userGameSettings.difficulty) {
+          case "easy":
+            generatedGameData.timeDurationInSeconds = 1000;
+            break;
+          case "medium":
+            generatedGameData.timeDurationInSeconds = 500;
+            break;
+          case "hard":
+            generatedGameData.timeDurationInSeconds = 200;
+            break;
+          default:
+            break;
+        }
+
+        const generatedNumberOfQuestionsPerType =
+          numberOfQuestionsPerTypeGenerator(
+            userGameSettings.numberOfQuestions,
+            userGameSettings.selectedQuestionTypes
+          );
+
+        const generatedDataArray = await questionDataRetriever(
+          generatedNumberOfQuestionsPerType,
+          userGameSettings.selectedQuestionTypes
+        );
+        const userAnswerArray = generatedDataArray.map(() => {
+          return "";
+        });
+
+        dispatch(formStoreActions.setGeneratedQuestionData(generatedDataArray));
+        dispatch(formStoreActions.setUserAnswersArray(userAnswerArray));
+        dispatch(formStoreActions.setResetTestTimer(true));
+        dispatch(formStoreActions.setTestStarted(true));
+        dispatch(formStoreActions.setStartTest(false));
+      };
+      const numberOfQuestionsPerTypeGenerator = (
+        numberOfQuestions: number,
+        questionTypeArray: string[]
+      ) => {
+        let numberOfQuestionsRemaining = numberOfQuestions;
+
+        const numberOfQuestionsPerQuestionArray = [];
+        for (
+          let indexOfSelectedQuestionTypes = 0;
+          indexOfSelectedQuestionTypes < questionTypeArray.length;
+          indexOfSelectedQuestionTypes++
+        ) {
+          if (indexOfSelectedQuestionTypes === questionTypeArray.length - 1) {
+            numberOfQuestionsPerQuestionArray.push(numberOfQuestionsRemaining);
+          } else {
+            const randomlyGeneratedNumber =
+              randomNumberGeneratorWithNumberOfQuestionRemaining(
+                numberOfQuestionsRemaining
+              );
+            numberOfQuestionsRemaining =
+              numberOfQuestionsRemaining - randomlyGeneratedNumber;
+            numberOfQuestionsPerQuestionArray.push(randomlyGeneratedNumber);
+          }
+        }
+        return numberOfQuestionsPerQuestionArray;
+      };
+
+      const getQuestionDataWithLimit = async (
+        apiRoute: string,
+        numberOfQuestions: number
+      ) => {
+        const retrievedDateData = await getAllQuestionDataWithLimit(
+          apiRoute,
+          numberOfQuestions
+        );
+
+        if (retrievedDateData.errorPresent) {
+          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
+          dispatch(
+            popupsStoreActions.setServerMessageData({
+              message: `${retrievedDateData.data}`,
+              messageType: "error",
+            })
+          );
+        } else {
+          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
+          dispatch(
+            popupsStoreActions.setServerMessageData({
+              message: `Data Retrieved`,
+              messageType: "success",
+            })
+          );
+
+          return retrievedDateData.data;
+        }
+      };
+      const questionDataRetriever = async (
+        arrayOfQuestionNumbers: number[],
+        arrayOfQuestionTypes: string[]
+      ) => {
+        let generatedDataArray: any[] = [];
+
+        for (
+          let indexOfArrayQuestionNumbers = 0;
+          indexOfArrayQuestionNumbers < arrayOfQuestionNumbers.length;
+          indexOfArrayQuestionNumbers++
+        ) {
+          const questionType =
+            arrayOfQuestionTypes[indexOfArrayQuestionNumbers];
+
+          switch (questionType) {
+            case "multiple choice":
+              const retrievedData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.multipleChoice,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+
+              const renderReadyInputData =
+                multipleChoiceDataRefactorer(retrievedData);
+
+              generatedDataArray =
+                generatedDataArray.concat(renderReadyInputData);
+
+              break;
+            case "dates":
+              const retrievedDatesData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.date,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+              const renderReadyDateData =
+                dateDataRefactorer(retrievedDatesData);
+
+              generatedDataArray =
+                generatedDataArray.concat(renderReadyDateData);
+              break;
+            case "inputs":
+              const retrievedInputData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.input,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+
+              const renderReadyInputsData =
+                inputDataRefactor(retrievedInputData);
+
+              generatedDataArray = generatedDataArray.concat(
+                renderReadyInputsData
+              );
+              break;
+            case "color":
+              const retrievedColorData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.color,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+              const renderReadyRetrievedColorData =
+                colorDataRefactor(retrievedColorData);
+
+              generatedDataArray = generatedDataArray.concat(
+                renderReadyRetrievedColorData
+              );
+              break;
+
+            case "check box":
+              const checkBoxData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.checkbox,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+              const renderReadyCheckboxData =
+                checkboxDataRefactor(checkBoxData);
+
+              generatedDataArray = generatedDataArray.concat(
+                renderReadyCheckboxData
+              );
+
+              break;
+
+            case "slider":
+              const retrievedSliderData = await getQuestionDataWithLimit(
+                acceptedQuestionDatabaseObject.slider,
+                arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
+              );
+              const renderReadySliderData =
+                sliderDataRefactorer(retrievedSliderData);
+
+              generatedDataArray = generatedDataArray.concat(
+                renderReadySliderData
+              );
+              break;
+            default:
+              break;
+          }
+        }
+
+        return generatedDataArray;
+      };
+      generateGameData();
+    }
+  }, [
+    dispatch,
+    testStarted,
+    userGameSettings.difficulty,
+    userGameSettings.numberOfQuestions,
+    userGameSettings.selectedQuestionTypes,
+    startTest,
+  ]);
+
   return (
     <>
-      <button
-        style={{
-          position: "fixed",
-          top: "20px",
-          left: "20px",
-          fontSize: "22px",
-        }}
-        onClick={generateGameData}
-      >
-        CREATE DATA
-      </button>
       {!endOfTestReached && (
         <>
           {generatedQuestionData.length !== 0 &&

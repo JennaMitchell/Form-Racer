@@ -3,6 +3,9 @@ import classes from "./nav-bar.module.css";
 import { MouseEvent } from "react";
 import { useAppDispatch } from "../../store/typescript-hooks";
 import { popupsStoreActions } from "../../store/popups-store";
+import { formStoreActions } from "../../store/form-store";
+import { testResetFunction } from "../../assets/test-functions/test-function";
+import BackgroundSettings from "../background-settings/background-settings";
 const NavBar = (): JSX.Element => {
   const buttonIdsList = [
     "nav-bar-signup-button",
@@ -17,7 +20,7 @@ const NavBar = (): JSX.Element => {
   const [animationReadyToTrigger, setAnimationReadyToTrigger] = useState(true);
   const dispatch = useAppDispatch();
 
-  const mouseEnterButton = (event: MouseEvent<HTMLButtonElement>) => {
+  const mouseEnterButton = (event: MouseEvent<HTMLElement>) => {
     const targetElement = event.target as HTMLButtonElement;
     const targetId = targetElement.id;
 
@@ -52,15 +55,20 @@ const NavBar = (): JSX.Element => {
       }, 500);
     }
   };
-  const signUpButtonClickHandler = () => {
-    dispatch(popupsStoreActions.setLockViewportActive(true));
-    dispatch(popupsStoreActions.setSignupPopupActive(true));
+  // const signUpButtonClickHandler = () => {
+  //   dispatch(popupsStoreActions.setLockViewportActive(true));
+  //   dispatch(popupsStoreActions.setSignupPopupActive(true));
+  // };
+  const startButtonHandler = () => {
+    testResetFunction(dispatch);
+
+    dispatch(formStoreActions.setStartTest(true));
   };
 
-  const loginButtonClickHandler = () => {
-    dispatch(popupsStoreActions.setLockViewportActive(true));
-    dispatch(popupsStoreActions.setLoginPopupActive(true));
-  };
+  // const loginButtonClickHandler = () => {
+  //   dispatch(popupsStoreActions.setLockViewportActive(true));
+  //   dispatch(popupsStoreActions.setLoginPopupActive(true));
+  // };
 
   const changeRacerButtonClickHandler = () => {
     dispatch(popupsStoreActions.setLockViewportActive(true));
@@ -69,7 +77,7 @@ const NavBar = (): JSX.Element => {
 
   return (
     <div className={classes.navBarContainer}>
-      <button
+      {/* <button
         className={`${classes.navBarButton} 
           ${
             activeButtonsIdsArray[0] === buttonIdsList[0] &&
@@ -89,8 +97,29 @@ const NavBar = (): JSX.Element => {
         onClick={signUpButtonClickHandler}
       >
         Signup
-      </button>
+      </button> */}
       <button
+        className={`${classes.navBarButton} 
+          ${
+            activeButtonsIdsArray[0] === buttonIdsList[0] &&
+            classes.navBarButtonLeft
+          } 
+          ${
+            activeButtonsIdsArray[1] === buttonIdsList[0] &&
+            classes.navBarButtonCenter
+          }
+          ${
+            activeButtonsIdsArray[2] === buttonIdsList[0] &&
+            classes.navBarButtonRight
+          }`}
+        key="nav-bar-start-button-key"
+        id={buttonIdsList[0]}
+        onMouseEnter={mouseEnterButton}
+        onClick={startButtonHandler}
+      >
+        Start
+      </button>
+      <div
         className={`${classes.navBarButton} 
             ${
               activeButtonsIdsArray[0] === buttonIdsList[1] &&
@@ -104,13 +133,12 @@ const NavBar = (): JSX.Element => {
               activeButtonsIdsArray[2] === buttonIdsList[1] &&
               classes.navBarButtonRight
             }`}
-        key="nav-bar-login-button-key"
+        key="nav-bar-background-button-key"
         id={buttonIdsList[1]}
         onMouseEnter={mouseEnterButton}
-        onClick={loginButtonClickHandler}
       >
-        Login
-      </button>
+        <BackgroundSettings />
+      </div>
       <button
         className={`${classes.navBarButton} 
               ${

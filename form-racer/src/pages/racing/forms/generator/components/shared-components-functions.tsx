@@ -15,14 +15,13 @@ export const updateActiveQuestionNumber = (
   currentQuestionNumber: number,
   numberOfQuestions: number
 ) => {
-  console.log(currentQuestionNumber);
-  console.log(numberOfQuestions);
   const newQuestionNumber = currentQuestionNumber + 1;
 
   if (numberOfQuestions <= newQuestionNumber) {
     dispatch(formStoreActions.setEndOfTestReached(true));
     dispatch(formStoreActions.setStartQuestionTimer(false));
   } else {
+    console.log("UPDATED QUESTION NUMBER");
     dispatch(formStoreActions.setActiveQuestionNumber(newQuestionNumber));
     dispatch(formStoreActions.setActiveQuestionNumberUpdated(true));
   }

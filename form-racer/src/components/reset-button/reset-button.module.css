@@ -1,0 +1,21 @@
+.resetButton {
+  background-color: var(--main800);
+  color: var(--black);
+  position: absolute;
+  top: 40px;
+  right: 80px;
+  width: max-content;
+  max-width: max-content;
+  max-height: max-content;
+  padding: 10px 20px;
+
+  font-size: var(--r22);
+  border-radius: 5px;
+  transition: all 0.5s;
+  z-index: 2;
+}
+.resetButton:hover {
+  box-shadow: 0px 0px 10px white;
+  background-color: var(--main200);
+  cursor: pointer;
+}

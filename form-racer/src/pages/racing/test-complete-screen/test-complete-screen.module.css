@@ -26,7 +26,7 @@
   position: absolute;
   right: -15px;
   top: -2px;
-  transition: background-color 0.25s;
+  transition: background-color 0.15s;
 }
 .typeBarActive {
   background-color: white;
@@ -42,8 +42,19 @@
   padding: 10px 20px;
   color: black;
   font-size: var(--r22);
+  animation: fadeIn 1s;
+  opacity: 0;
+  animation-fill-mode: both;
 }
 .playAgainButton:hover {
   background-color: var(--main200);
   box-shadow: none;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

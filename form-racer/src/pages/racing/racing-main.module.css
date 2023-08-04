@@ -50,12 +50,35 @@
   top: -300px;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: all 10s;
-  z-index: 9;
+  transition: top 5s, opacity 5s;
+  z-index: 3;
 }
 .homeWorldMoveIn {
   top: 50%;
 }
 .homeWorldFadeOut {
   opacity: 0;
+}
+.resetHomeWorld {
+  transition: all 0s;
+  top: -300px;
+}
+.startButton {
+  background-color: var(--main800);
+  color: var(--black);
+  position: absolute;
+  width: max-content;
+  max-width: max-content;
+  max-height: max-content;
+  padding: 10px 20px;
+  font-size: var(--r22);
+  border-radius: 5px;
+  transition: all 0.5s;
+  top: 200px;
+  right: 110px;
+  box-shadow: 0px 0px 10px white;
+}
+.startButton:hover {
+  background-color: var(--main200);
+  cursor: pointer;
 }

@@ -5,6 +5,7 @@
   bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: -1;
 }
 .astroidImage {
   width: max(100%, 100%);

@@ -8,6 +8,7 @@ import LoginPopup from "./components/popups/login/login-popup";
 import ChangeRacerPopup from "./components/popups/change-racer/change-racer-popup";
 import GameSetupPopup from "./components/popups/game-setup/game-setup-popup";
 import ServerMessagePopup from "./components/popups/server-message/server-message-popup";
+import ResetButton from "./components/reset-button/reset-button";
 function App() {
   const lockViewportActive = useAppSelector(
     (state) => state.popups.lockViewportActive
@@ -33,7 +34,7 @@ function App() {
   const serverMessageData = useAppSelector(
     (state) => state.popups.serverMessageData
   );
-
+  const testStarted = useAppSelector((state) => state.formRacing.testStarted);
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--scrollbar-width",
@@ -62,7 +63,8 @@ function App() {
       {serverMessagePopupActive && (
         <ServerMessagePopup {...serverMessageData} />
       )}
-      <NavBar />
+      {!testStarted && <NavBar />}
+      {testStarted && <ResetButton />}
       <RacingTopElement />
     </div>
   );

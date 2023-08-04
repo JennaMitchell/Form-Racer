@@ -4,6 +4,7 @@
   object-fit: fill;
   background-color: transparent;
   position: absolute;
+  z-index: -1;
 
   top: 0px;
   left: 53.25%;
@@ -16,4 +17,7 @@
   top: -100vh;
   visibility: visible;
   transition: top 3s;
+}
+.hideWeapons {
+  opacity: 0;
 }

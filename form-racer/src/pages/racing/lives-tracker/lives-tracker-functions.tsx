@@ -25,6 +25,7 @@ export const decreaseLivesTracker = (
     const copyOfUserLivesArray = JSON.parse(JSON.stringify(userLivesArray));
     copyOfUserLivesArray[indexOfNextAvailableLife] = false;
     dispatch(formStoreActions.setActiveLifesArray(copyOfUserLivesArray));
+    dispatch(formStoreActions.setActiveLifesArrayDecreased(true));
   } else {
     dispatch(formStoreActions.setUserFailedGame(true));
     dispatch(formStoreActions.setEndOfTestReached(true));

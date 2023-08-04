@@ -2,30 +2,22 @@
   width: max-content;
   max-width: max-content;
   max-height: max-content;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: center;
-  position: absolute;
-  top: 120px;
-  right: 110px;
-  z-index: 2;
+  position: relative;
+  padding: 0px;
 }
 
 .backgroundDropdownMenuButton {
   width: max-content;
   max-width: max-content;
-  padding: 10px 20px;
-  background-color: var(--main800);
+  background-color: inherit;
   font-size: var(--r18);
+  line-height: var(--r18);
   color: var(--black);
   border-radius: 5px;
+  padding: 0px;
   box-shadow: 0px 0px 10px white;
 }
-.backgroundDropdownMenuButton:hover {
-  background-color: var(--main200);
-}
+
 .backgroundStopButton,
 .backgroundStartButton {
   display: flex;
@@ -61,4 +53,16 @@
 .backgroundStopButton:hover {
   background-color: var(--main200);
   color: grey;
+}
+.contentContainer {
+  width: max-content;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: transparent;
+  bottom: calc(-100% - 60px);
+  left: -20px;
 }

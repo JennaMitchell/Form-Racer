@@ -45,7 +45,6 @@ type InputProps = {
 
 const GeneratedInput = ({
   label,
-
   id,
   inputProps,
   questionText,
@@ -80,6 +79,9 @@ const GeneratedInput = ({
   const [retriggerAnimation, setRetriggerAnimation] = useState(false);
   const astroidExplosionTriggered = useAppSelector(
     (state) => state.formRacing.astroidExplosionTriggered
+  );
+  const testResetTriggered = useAppSelector(
+    (state) => state.formRacing.testResetTriggered
   );
 
   // Handeling question Timer
@@ -199,6 +201,7 @@ const GeneratedInput = ({
         const notNullCurrentRef = topContainerCurrent;
         notNullCurrentRef.style.top = "0px";
       }
+      console.log("MOVE RETRIEGGER");
       setRetriggerAnimation(true);
       setTriggerAnimation(false);
 
@@ -208,10 +211,21 @@ const GeneratedInput = ({
 
   useEffect(() => {
     if (retriggerAnimation) {
+      console.log("ANIMATED TRIGGERED");
       setTriggerAnimation(true);
       setRetriggerAnimation(false);
     }
   }, [retriggerAnimation, dispatch]);
+
+  useEffect(() => {
+    if (testResetTriggered) {
+      const topContainerCurrent = topContainerRef.current;
+      if (topContainerCurrent) {
+        const notNullCurrentRef = topContainerCurrent;
+        notNullCurrentRef.style.top = "0px";
+      }
+    }
+  }, [testResetTriggered]);
 
   return (
     <div

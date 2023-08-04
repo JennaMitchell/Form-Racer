@@ -3,9 +3,23 @@ import axios from "axios";
 import { databaseURL } from "../constants/constants";
 import { apiErrorHandler } from "./api-error-handler";
 
+export type LeaderboardRetrievedDataType = {
+  username: string;
+  users_time: string;
+  ranking: string;
+};
+
+// export type LeaderboardRetrievedDataTypeDate = {
+//   username: string;
+//   users_time: Date;
+//   ranking: string;
+// };
+
 export const getAllQuestionData = async (databaseExtension: string) => {
   try {
-    const returnedData = await axios.get(`${databaseURL}/${databaseExtension}`);
+    const returnedData = await axios.get(
+      `${databaseURL}/question-data/get-all-question-data${databaseExtension}`
+    );
     const errorPresent = apiErrorHandler(returnedData);
     if (errorPresent) {
       throw new Error(`${returnedData?.data?.code}`);
@@ -29,11 +43,18 @@ export const getAllQuestionDataWithLimit = async (
   databaseExtension: string,
   limit: number
 ) => {
-  console.log(`${databaseURL}/limit_${databaseExtension}${limit}`);
   try {
+    const requestData = {
+      database: databaseExtension,
+      limit: limit,
+    };
+
     const returnedData = await axios.get(
-      `${databaseURL}/limit_${databaseExtension}${limit}`
+      `${databaseURL}/question-data/get-question-data-with-limit${JSON.stringify(
+        requestData
+      )}`
     );
+
     const errorPresent = apiErrorHandler(returnedData);
     if (errorPresent) {
       throw new Error(`${returnedData?.data?.code}`);
@@ -45,6 +66,66 @@ export const getAllQuestionDataWithLimit = async (
     }
   } catch (err) {
     let message;
+    if (err instanceof Error) message = err.message;
+    else message = String(err);
+    return {
+      data: message,
+      errorPresent: true,
+    };
+  }
+};
+
+export const getLeaderboardData = async (leaderboard: string) => {
+  try {
+    const returnedData = await axios.get(
+      `${databaseURL}/leaderboard-data/get-leaderboard-data${leaderboard}`
+    );
+    const errorPresent = apiErrorHandler(returnedData);
+    if (errorPresent) {
+      throw new Error(`${returnedData?.data?.code}`);
+    } else {
+      const returnedDataTyped: LeaderboardRetrievedDataType[] =
+        returnedData.data;
+      return {
+        data: returnedDataTyped,
+        errorPresent: false,
+      };
+    }
+  } catch (err) {
+    let message;
+
+    if (err instanceof Error) message = err.message;
+    else message = String(err);
+    return {
+      data: message,
+      errorPresent: true,
+    };
+  }
+};
+export const updateLeaderboardData = async (
+  leaderboard: string,
+  data: LeaderboardRetrievedDataType
+) => {
+  try {
+    const returnedData = await axios.put(
+      `${databaseURL}/leaderboard-data/update-leader-board-data${leaderboard}`,
+      data
+    );
+    console.log(returnedData);
+    const errorPresent = apiErrorHandler(returnedData);
+    if (errorPresent) {
+      throw new Error(`${returnedData?.data?.code}`);
+    } else {
+      const returnedDataTyped: LeaderboardRetrievedDataType[] =
+        returnedData.data;
+      return {
+        data: returnedDataTyped,
+        errorPresent: false,
+      };
+    }
+  } catch (err) {
+    let message;
+
     if (err instanceof Error) message = err.message;
     else message = String(err);
     return {

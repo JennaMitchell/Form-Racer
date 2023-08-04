@@ -4,10 +4,11 @@
   max-height: max-content;
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 50px;
+  position: fixed;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 14;
 }
 
 .generatedInputQuestionContainer {
@@ -24,7 +25,7 @@
   border-radius: 10px;
   box-shadow: 0px 0px 20px white;
   border: 1px solid white;
-  z-index: 4;
+
   position: relative;
 }
 .generatedInputContainer {
@@ -110,4 +111,7 @@
 }
 .hideQuestion {
   opacity: 0;
+}
+.astroidDestroyTrigger {
+  z-index: 1000;
 }

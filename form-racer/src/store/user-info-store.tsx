@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export type GameSettingsType = {
+  difficulty: string;
+  numberOfQuestions: number;
+  selectedQuestionTypes: string[];
+  timePerQuestionInSeconds: number;
+};
+
 interface State {
   userSelectedRacerNumber: number;
   movingBackgroundActive: boolean;
   backgroundSpeed: number;
   username: string;
-  gameSettings: {
-    difficulty: string;
-    numberOfQuestions: number;
-    selectedQuestionTypes: string[];
-    timePerQuestionInSeconds: number;
-  };
+  gameSettings: GameSettingsType;
   activeWeaponIndex: number;
 }
 const initialState: State = {

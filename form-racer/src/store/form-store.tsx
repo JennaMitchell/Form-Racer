@@ -70,12 +70,17 @@ interface State {
   gameOverScreenActive: boolean;
   fireShipWeapon: boolean;
   astroidDestroyed: boolean;
-  questionFailed: boolean;
+
   resetTestTimer: boolean;
   completionTime: number;
   testStarted: boolean;
   homeWorldAnimationComplete: boolean;
   shipReturnedAnimationComplete: boolean;
+  returnShipHome: boolean;
+
+  testResetTriggered: boolean;
+  weaponFireDestroyedAstroid: boolean;
+  activeLifesArrayDecreased: boolean;
 }
 
 const initialState: State = {
@@ -92,12 +97,15 @@ const initialState: State = {
   gameOverScreenActive: false,
   fireShipWeapon: false,
   astroidDestroyed: false,
-  questionFailed: false,
   resetTestTimer: false,
   completionTime: 0,
   testStarted: false,
   homeWorldAnimationComplete: false,
   shipReturnedAnimationComplete: false,
+  returnShipHome: false,
+  testResetTriggered: false,
+  weaponFireDestroyedAstroid: false,
+  activeLifesArrayDecreased: false,
 };
 
 export const formStoreSlice = createSlice({
@@ -112,6 +120,9 @@ export const formStoreSlice = createSlice({
     },
     setActiveLifesArray(state, { payload }) {
       state.activeLifesArray = payload;
+    },
+    setActiveLifesArrayDecreased(state, { payload }) {
+      state.activeLifesArrayDecreased = payload;
     },
     setUserFailedGame(state, { payload }) {
       state.userFailedGame = payload;
@@ -159,6 +170,15 @@ export const formStoreSlice = createSlice({
     },
     setShipReturnedAnimationComplete(state, { payload }) {
       state.shipReturnedAnimationComplete = payload;
+    },
+    setReturnShipHome(state, { payload }) {
+      state.returnShipHome = payload;
+    },
+    setTestResetTriggered(state, { payload }) {
+      state.testResetTriggered = payload;
+    },
+    setWeaponFireDestroyedAstroid(state, { payload }) {
+      state.weaponFireDestroyedAstroid = payload;
     },
   },
 });

@@ -5,9 +5,10 @@
   width: max(100px, 100px);
   height: max(100px, 100px);
   display: relative;
-  transition: all 1s ease-out;
+  transition: left 1s ease-out;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 3;
+  animation: none;
 }
 .racerBody {
   width: max(60%, 60%);
@@ -25,6 +26,13 @@
 }
 .hideShip {
   display: none;
+}
+.resetShip {
+  animation: none;
+  display: none;
+  left: 50%;
+  bottom: 20px;
+  transition: 0s;
 }
 @keyframes returnHome {
   0% {

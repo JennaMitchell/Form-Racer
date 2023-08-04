@@ -7,7 +7,7 @@ import { racerData } from "../../../assets/constants/constants";
 import { useState, useCallback, useEffect } from "react";
 import RacingShipEngines from "./ship-engines/racing-ship-engines";
 import ShipExplosion from "../../../components/animations/ship-explosion/ship-explosion";
-import { gameResetFunction } from "../../../assets/game-functions/game-function";
+import { testResetFunction } from "../../../assets/test-functions/test-function";
 import ShipMissilesAnimation from "../../../components/animations/ship-missles/ship-missles-animation";
 import { formStoreActions } from "../../../store/form-store";
 const RacingShipContainer = () => {
@@ -34,9 +34,12 @@ const RacingShipContainer = () => {
   const fireShipWeapons = useAppSelector(
     (state) => state.formRacing.fireShipWeapon
   );
-  const [returnShipHome, setReturnShipHome] = useState(false);
-  const [weaponFireDestroyedAstroid, setWeaponFireDestroyedAstroid] =
-    useState(false);
+  const testResetTriggered = useAppSelector(
+    (state) => state.formRacing.testResetTriggered
+  );
+  const returnShipHome = useAppSelector(
+    (state) => state.formRacing.returnShipHome
+  );
 
   const activeQuestionNumberUpdated = useAppSelector(
     (state) => state.formRacing.activeQuestionNumberUpdated
@@ -46,6 +49,9 @@ const RacingShipContainer = () => {
   );
   const homeWorldAnimationComplete = useAppSelector(
     (state) => state.formRacing.homeWorldAnimationComplete
+  );
+  const weaponFireDestroyedAstroid = useAppSelector(
+    (state) => state.formRacing.weaponFireDestroyedAstroid
   );
   /// Handeling the Collision between the ship fired Weapon and the
 
@@ -81,7 +87,7 @@ const RacingShipContainer = () => {
 
         if (weaponFireTopPosition <= activeQuestionBottomEdgeFromTop) {
           dispatch(formStoreActions.setAstroidExplosionTriggered(true));
-          setWeaponFireDestroyedAstroid(true);
+          dispatch(formStoreActions.setWeaponFireDestroyedAstroid(true));
         }
       }
     }
@@ -106,7 +112,7 @@ const RacingShipContainer = () => {
   // reset function
   useEffect(() => {
     if (activeQuestionNumberUpdated || endOfTestReached) {
-      setWeaponFireDestroyedAstroid(false);
+      dispatch(formStoreActions.setWeaponFireDestroyedAstroid(false));
       dispatch(formStoreActions.setFireShipWeapons(false));
     }
   }, [activeQuestionNumberUpdated, dispatch, endOfTestReached]);
@@ -132,7 +138,7 @@ const RacingShipContainer = () => {
   useEffect(() => {
     if (endOfTestReached && userFailedTest) {
       const resetTestTimeout = setTimeout(() => {
-        gameResetFunction(dispatch);
+        testResetFunction(dispatch);
       }, 3000);
       return () => {
         clearTimeout(resetTestTimeout);
@@ -142,7 +148,8 @@ const RacingShipContainer = () => {
 
   useEffect(() => {
     if (endOfTestReached && !userFailedTest && homeWorldAnimationComplete) {
-      setReturnShipHome(true);
+      dispatch(formStoreActions.setReturnShipHome(true));
+
       const returnShipAnimationTimeOut = setTimeout(() => {
         dispatch(formStoreActions.setShipReturnedAnimationComplete(true));
       }, 2500);
@@ -160,22 +167,22 @@ const RacingShipContainer = () => {
       }  ${racerTopContainerShakePosition === "left" && classes.shipMoveLeft}
       ${returnShipHome && classes.returnShipHome}
       ${shipReturnedAnimationComplete && classes.hideShip}
+      ${testResetTriggered && classes.resetShip}
    `}
     >
       {endOfTestReached && userFailedTest && <ShipExplosion />}
 
-      {endOfTestReached &&
-        !userFailedTest &&
-        !shipReturnedAnimationComplete && (
-          <>
-            <img
-              className={classes.shipHull}
-              src={racerData[userSelectedRacerNumber].racerBody}
-              alt="ship racer hull"
-            />
-            <RacingShipEngines />
-          </>
-        )}
+      {!userFailedTest && !shipReturnedAnimationComplete && (
+        <>
+          <img
+            className={classes.shipHull}
+            src={racerData[userSelectedRacerNumber].racerBody}
+            alt="ship racer hull"
+          />
+          <RacingShipEngines />
+        </>
+      )}
+
       <ShipMissilesAnimation fireShipMissle={fireShipWeapons} />
     </div>
   );

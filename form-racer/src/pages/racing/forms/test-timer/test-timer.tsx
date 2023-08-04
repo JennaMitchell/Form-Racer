@@ -13,6 +13,9 @@ const TestTimer = (): JSX.Element => {
   const endOfTestReached = useAppSelector(
     (state) => state.formRacing.endOfTestReached
   );
+  const testResetTriggered = useAppSelector(
+    (state) => state.formRacing.testResetTriggered
+  );
 
   const dispatch = useAppDispatch();
 
@@ -81,6 +84,12 @@ const TestTimer = (): JSX.Element => {
     testStarted,
     endOfTestReached,
   ]);
+
+  useEffect(() => {
+    if (testResetTriggered) {
+      setOverallQuestionTimeInSeconds(0);
+    }
+  }, [testResetTriggered, dispatch]);
 
   return (
     <div className={classes.testTimerContainer}>

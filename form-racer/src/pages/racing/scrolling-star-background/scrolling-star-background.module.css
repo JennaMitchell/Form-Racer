@@ -5,7 +5,10 @@
   );
   height: max(100vh, 100vh);
   background-image: url("../../../assets/backgrounds/pixel-space.jpeg");
-  background-size: contain;
+  background-size: 100%;
+  background-position: left;
+  background-repeat: no-repeat;
+
   position: fixed;
   transition: top 0.1s;
   left: 0px;
