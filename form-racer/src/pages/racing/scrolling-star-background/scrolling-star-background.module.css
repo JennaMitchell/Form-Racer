@@ -4,7 +4,7 @@
     calc(100vw - var(--scrollbar-width))
   );
   height: max(100vh, 100vh);
-  background-image: url("../../../assets/backgrounds/pixel-space.jpeg");
+  background-image: url("../../../assets/images/backgrounds/pixel-space.jpeg");
   background-size: 100%;
   background-position: left;
   background-repeat: no-repeat;

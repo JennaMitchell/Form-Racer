@@ -34,7 +34,7 @@ export const checkboxDataRefactor = (retrievedData: CheckBoxDataType[]) => {
       questionText: dataEntry.checkbox_question,
       possibleAnswersArray: possibleAnswersArray,
       answerKeyArray: correctAnswerArray,
-      questionType: "checkBox",
+      questionType: "checkbox",
       id: `checkbox-question-${index}`,
     };
   });

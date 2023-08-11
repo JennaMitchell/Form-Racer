@@ -232,7 +232,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
               );
               break;
 
-            case "check box":
+            case "checkbox":
               const checkBoxData = await getQuestionDataWithLimit(
                 acceptedQuestionDatabaseObject.checkbox,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
@@ -262,6 +262,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
               break;
           }
         }
+        console.log(generatedDataArray);
 
         return generatedDataArray;
       };
@@ -281,91 +282,127 @@ const FormGeneratorMainPage = (): JSX.Element => {
       {!endOfTestReached && (
         <>
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
               "input" && (
               <GeneratedInput
-                label={generatedQuestionData[activeQuestionNumber].label}
-                id={`input-question-${activeQuestionNumber}`}
+                label={generatedQuestionData[activeQuestionNumber - 1].label}
+                id={generatedQuestionData[activeQuestionNumber - 1].id}
                 inputProps={
-                  generatedQuestionData[activeQuestionNumber].inputProps
+                  generatedQuestionData[activeQuestionNumber - 1].inputProps
                 }
-                key={`input-question-${activeQuestionNumber}-top-component`}
+                key={`input-question-${activeQuestionNumber - 1}-top-component`}
                 questionNumber={activeQuestionNumber}
                 questionText={
-                  generatedQuestionData[activeQuestionNumber].question_text
+                  generatedQuestionData[activeQuestionNumber - 1].question_text
                 }
                 totalNumberOfQuestions={generatedQuestionData.length}
               />
             )}
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
-              "multipleChoice" && (
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
+              "multiple choice" && (
               <GeneratedMultipleChoice
-                id={`multiple-choice-question-${activeQuestionNumber}`}
                 possibleAnswersArray={
-                  generatedQuestionData[activeQuestionNumber]
-                    .possibleAnswersArray
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .possibleAnswers
                 }
-                questionNumber={activeQuestionNumber + 1}
+                questionNumber={activeQuestionNumber}
+                totalNumberOfQuestions={generatedQuestionData.length}
+                questionId={generatedQuestionData[activeQuestionNumber - 1].id}
+                correctAnswerIndex={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .correctAnswerIndex
+                }
+                questionText={
+                  generatedQuestionData[activeQuestionNumber - 1].question
+                }
               />
             )}
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
-              "date" && (
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
+              "dates" && (
               <GeneratedDate
-                id={`date-question-${activeQuestionNumber}`}
-                questionNumber={activeQuestionNumber + 1}
+                questionId={generatedQuestionData[activeQuestionNumber - 1].id}
+                questionNumber={activeQuestionNumber}
                 dateQuestion={
-                  generatedQuestionData[activeQuestionNumber].dateQuestion
+                  generatedQuestionData[activeQuestionNumber - 1].questionText
+                }
+                totalNumberOfQuestions={generatedQuestionData.length}
+                startDate={
+                  generatedQuestionData[activeQuestionNumber - 1].startDate
+                }
+                endDate={
+                  generatedQuestionData[activeQuestionNumber - 1].endDate
                 }
               />
             )}
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
               "color" && (
               <GeneratedColorInput
+                totalNumberOfQuestions={generatedQuestionData.length}
                 circleColorOneHexCode={
-                  generatedQuestionData[activeQuestionNumber].questionType
+                  generatedQuestionData[activeQuestionNumber - 1].firstColor
                 }
                 circleColorTwoHexCode={
-                  generatedQuestionData[activeQuestionNumber].questionType
+                  generatedQuestionData[activeQuestionNumber - 1].secondColor
                 }
                 resultColorLowerEnd={
-                  generatedQuestionData[activeQuestionNumber].questionType
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .resultRangeStartColor
                 }
                 resultColorHigherEnd={
-                  generatedQuestionData[activeQuestionNumber].questionType
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .resultRangeEndColor
                 }
-                questionNumber={activeQuestionNumber + 1}
+                questionNumber={activeQuestionNumber}
+                questionId={generatedQuestionData[activeQuestionNumber - 1].id}
               />
             )}
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
               "checkbox" && (
               <GeneratedCheckboxQuestion
-                questionNumber={activeQuestionNumber + 1}
+                questionNumber={activeQuestionNumber}
                 questionText={
-                  generatedQuestionData[activeQuestionNumber].questionText
+                  generatedQuestionData[activeQuestionNumber - 1].questionText
                 }
-                checkBoxOptions={
-                  generatedQuestionData[activeQuestionNumber].checkBoxOptions
+                possibleAnswersArray={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .possibleAnswersArray
                 }
+                totalNumberOfQuestions={generatedQuestionData.length}
+                correctCheckBoxOptions={
+                  generatedQuestionData[activeQuestionNumber - 1].answerKeyArray
+                }
+                questionId={generatedQuestionData[activeQuestionNumber - 1].id}
               />
             )}
           {generatedQuestionData.length !== 0 &&
-            generatedQuestionData[activeQuestionNumber].questionType ===
+            generatedQuestionData[activeQuestionNumber - 1].questionType ===
               "slider" && (
               <GeneratedRangeInput
-                questionNumber={
-                  generatedQuestionData[activeQuestionNumber].questionNumber
-                }
+                questionNumber={activeQuestionNumber}
                 questionText={
-                  generatedQuestionData[activeQuestionNumber].questionText
+                  generatedQuestionData[activeQuestionNumber - 1].questionText
                 }
-                slideMin={generatedQuestionData[activeQuestionNumber].slideMin}
-                slideMax={generatedQuestionData[activeQuestionNumber].slideMax}
-                retrieveSlideInput={
-                  generatedQuestionData[activeQuestionNumber].retrieveSlideInput
+                slideMin={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .sliderLowerLimit
+                }
+                slideMax={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .sliderHigherLimit
+                }
+                totalNumberOfQuestions={generatedQuestionData.length}
+                questionId={generatedQuestionData[activeQuestionNumber - 1].id}
+                questionTextMinValue={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .sliderQuestionLowerLimit
+                }
+                questionTextMaxValue={
+                  generatedQuestionData[activeQuestionNumber - 1]
+                    .sliderQuestionHigherLimit
                 }
               />
             )}

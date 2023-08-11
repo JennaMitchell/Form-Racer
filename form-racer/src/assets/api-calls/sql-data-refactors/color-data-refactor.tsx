@@ -5,62 +5,72 @@ type ColorDataFromBackendType = {
 };
 
 const hexToDeximalPairConvertor = (hexNumberPair: string[]) => {
-  let runningTotal = 0;
-  for (let indexOfPair = 0; indexOfPair < 2; indexOfPair++) {
-    const acceptableValues = [
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-    ];
-    if (acceptableValues.includes(hexNumberPair[indexOfPair])) {
-      switch (hexNumberPair[indexOfPair]) {
-        case "A":
-          runningTotal = runningTotal + 10;
-          break;
-        case "B":
-          runningTotal = runningTotal + 11;
-          break;
-        case "C":
-          runningTotal = runningTotal + 12;
-          break;
-        case "D":
-          runningTotal = runningTotal + 13;
-          break;
-        case "E":
-          runningTotal = runningTotal + 14;
-          break;
-        case "F":
-          runningTotal = runningTotal + 15;
-          break;
-        default:
-          runningTotal = runningTotal + +hexNumberPair[indexOfPair];
-      }
-    }
-  }
+  const acceptableValues = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+  ];
 
-  return runningTotal;
+  if (hexNumberPair.length !== 2) {
+    return 0;
+  } else {
+    const decimalValues = hexNumberPair.map((value, index) => {
+      if (acceptableValues.includes(value)) {
+        switch (value.toLocaleLowerCase()) {
+          case "a":
+            return 16 ** index * 10;
+          case "b":
+            return 16 ** index * 11;
+
+          case "c":
+            return 16 ** index * 12;
+
+          case "d":
+            return 16 ** index * 13;
+
+          case "e":
+            return 16 ** index * 14;
+
+          case "f":
+            return 16 ** index * 15;
+
+          default:
+            return 16 ** index * +value;
+        }
+      } else {
+        return 0;
+      }
+    });
+
+    return decimalValues[1] + decimalValues[0];
+  }
 };
 
-const hexColorToArrayConverter = (colorString: string) => {
+export const hexColorToArrayConverter = (colorString: string) => {
   const splitColorString = colorString.split("");
-  console.log(splitColorString);
+
   if (splitColorString.length === 7) {
     const colorDigitArray: number[] = [0, 0, 0];
     splitColorString.splice(0, 1);
-    console.log(splitColorString);
 
     const firstColorDigitPair = splitColorString.slice(0, 2);
     colorDigitArray[0] = hexToDeximalPairConvertor(firstColorDigitPair);
@@ -69,6 +79,9 @@ const hexColorToArrayConverter = (colorString: string) => {
     colorDigitArray[1] = hexToDeximalPairConvertor(secondColorDigitPair);
     const thirdColorDigitPair = splitColorString.slice(4, 6);
     colorDigitArray[2] = hexToDeximalPairConvertor(thirdColorDigitPair);
+
+    console.log(colorDigitArray);
+
     return colorDigitArray;
   } else {
     return [0, 0, 0];
@@ -97,28 +110,65 @@ const colorMixer = (rgbA: number[], rgbB: number[], amountToMix: number) => {
 export const colorDataRefactor = (
   retrievedData: ColorDataFromBackendType[]
 ) => {
+  const colorErrorWindow = 150;
   return retrievedData.map((dataEntry, index) => {
     const convertedColorOne = hexColorToArrayConverter(dataEntry.first_color);
     const convertedColorTwo = hexColorToArrayConverter(dataEntry.second_color);
 
-    const resultColor = colorMixer(convertedColorOne, convertedColorTwo, 1);
+    const resultColor = colorMixer(convertedColorOne, convertedColorTwo, 0.5);
     const lowerResultColor = {
-      r: resultColor.r - 5 < 0 ? 0 : resultColor.r - 5,
-      g: resultColor.g - 5 < 0 ? 0 : resultColor.g - 5,
-      b: resultColor.b - 5 < 0 ? 0 : resultColor.b - 5,
+      r:
+        resultColor.r - colorErrorWindow < 0
+          ? 0
+          : resultColor.r - colorErrorWindow,
+      g:
+        resultColor.g - colorErrorWindow < 0
+          ? 0
+          : resultColor.g - colorErrorWindow,
+      b:
+        resultColor.b - colorErrorWindow < 0
+          ? 0
+          : resultColor.b - colorErrorWindow,
     };
     const higherResultColor = {
-      r: resultColor.r + 5,
-      g: resultColor.g + 5,
-      b: resultColor.b + 5,
+      r:
+        resultColor.r + colorErrorWindow > 255
+          ? 255
+          : resultColor.r + colorErrorWindow,
+      g:
+        resultColor.g + colorErrorWindow > 255
+          ? 255
+          : resultColor.g + colorErrorWindow,
+      b:
+        resultColor.b + colorErrorWindow > 255
+          ? 255
+          : resultColor.b + colorErrorWindow,
     };
+    const seperatedFirstColorToMix = hexColorToArrayConverter(
+      dataEntry.first_color
+    );
+    const seperatedSecondColorToMix = hexColorToArrayConverter(
+      dataEntry.second_color
+    );
+    const convertedFirstColorToMix = `rgb(${seperatedFirstColorToMix[0]},${seperatedFirstColorToMix[1]},${seperatedFirstColorToMix[2]})`;
+    const convertedSecondColorToMix = `rgb(${seperatedSecondColorToMix[0]},${seperatedSecondColorToMix[1]},${seperatedSecondColorToMix[2]})`;
 
     return {
-      firstColor: dataEntry.first_color,
-      secondColor: dataEntry.second_color,
+      firstColor: convertedFirstColorToMix,
+      secondColor: convertedSecondColorToMix,
       resultColor: `rgb(${resultColor.r},${resultColor.g},${resultColor.b})`,
-      resultRangeStartColor: `rgb(${lowerResultColor.r},${lowerResultColor.g},${lowerResultColor.b})`,
-      resultRangeEndColor: `rgb(${higherResultColor.r},${higherResultColor.g},${higherResultColor.b})`,
+      resultRangeStartColor: {
+        r: lowerResultColor.r,
+        g: lowerResultColor.g,
+        b: lowerResultColor.b,
+      },
+
+      resultRangeEndColor: {
+        r: higherResultColor.r,
+        g: higherResultColor.g,
+        b: higherResultColor.b,
+      },
+
       questionType: "color",
       id: `color-question-${index}`,
     };

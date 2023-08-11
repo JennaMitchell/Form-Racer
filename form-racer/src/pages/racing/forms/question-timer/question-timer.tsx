@@ -49,6 +49,7 @@ const QuestionTimerWindow = (): JSX.Element => {
     dispatch(
       formStoreActions.setActiveQuestionNumber(activeQuestionNumber + 1)
     );
+    dispatch(formStoreActions.setActiveQuestionNumberUpdated(true));
   }, [
     activeLivesArray,
     activeQuestionNumber,

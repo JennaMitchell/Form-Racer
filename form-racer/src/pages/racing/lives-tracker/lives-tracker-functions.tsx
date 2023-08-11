@@ -1,7 +1,5 @@
 import { formStoreActions } from "../../../store/form-store";
 
-import { KeyboardEvent } from "react";
-
 export const decreaseLivesTracker = (
   dispatch: any,
   userLivesArray: boolean[]
@@ -29,30 +27,6 @@ export const decreaseLivesTracker = (
   } else {
     dispatch(formStoreActions.setUserFailedGame(true));
     dispatch(formStoreActions.setEndOfTestReached(true));
-  }
-};
-
-export const enterPressHandler = (
-  event: KeyboardEvent<HTMLInputElement>,
-  inputValue: string,
-  pattern: string,
-  dispatch: any,
-  userLivesArray: boolean[]
-) => {
-  const keyCode = event.key;
-  console.log(keyCode);
-  if (inputValue) {
-    const regexPattern = new RegExp(pattern);
-    const patternMet = regexPattern.test(inputValue);
-    console.log(patternMet);
-
-    if (keyCode === "Enter" && patternMet) {
-      return { enterPressed: true, patternMet: true };
-    } else if (!patternMet && keyCode === "Enter") {
-      decreaseLivesTracker(dispatch, userLivesArray);
-      return { enterPressed: false, patternMet: false };
-    } else if (keyCode !== "Enter" && patternMet) {
-      return { enterPressed: false, patternMet: true };
-    }
+    dispatch(formStoreActions.setGameOverScreenActive(true));
   }
 };

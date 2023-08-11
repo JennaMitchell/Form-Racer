@@ -3,18 +3,18 @@ import classes from "./nav-bar.module.css";
 import { MouseEvent } from "react";
 import { useAppDispatch } from "../../store/typescript-hooks";
 import { popupsStoreActions } from "../../store/popups-store";
-import { formStoreActions } from "../../store/form-store";
-import { testResetFunction } from "../../assets/test-functions/test-function";
+
 import BackgroundSettings from "../background-settings/background-settings";
 const NavBar = (): JSX.Element => {
   const buttonIdsList = [
-    "nav-bar-signup-button",
-    "nav-bar-login-button",
+    "nav-bar-start-button",
+    "nav-bar-settings-button",
+
     "nav-bar-racer-button",
   ];
   const [activeButtonsIdsArray, setActiveButtonsIdsArray] = useState([
-    "nav-bar-signup-button",
-    "nav-bar-login-button",
+    "nav-bar-settings-button",
+    "nav-bar-start-button",
     "nav-bar-racer-button",
   ]);
   const [animationReadyToTrigger, setAnimationReadyToTrigger] = useState(true);
@@ -60,9 +60,8 @@ const NavBar = (): JSX.Element => {
   //   dispatch(popupsStoreActions.setSignupPopupActive(true));
   // };
   const startButtonHandler = () => {
-    testResetFunction(dispatch);
-
-    dispatch(formStoreActions.setStartTest(true));
+    dispatch(popupsStoreActions.setGameSetupActive(true));
+    dispatch(popupsStoreActions.setLockViewportActive(true));
   };
 
   // const loginButtonClickHandler = () => {

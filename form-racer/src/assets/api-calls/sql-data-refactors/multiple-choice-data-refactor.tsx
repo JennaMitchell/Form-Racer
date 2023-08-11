@@ -19,7 +19,7 @@ export const multipleChoiceDataRefactorer = (
         dataEntry.possible_answer_three,
         dataEntry.possible_answer_four,
       ],
-      questionType: "multipleChoice",
+      questionType: "multiple choice",
       question: dataEntry.question,
       correctAnswerIndex:
         dataEntry.correct_answer_index >= 4

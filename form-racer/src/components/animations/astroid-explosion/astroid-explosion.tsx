@@ -1,7 +1,7 @@
-import AstroidExplosionPhaseOne from "../../../assets/astroid-explosion/astroid_explosion_phase_1.png";
-import AstroidExplosionPhaseTwo from "../../../assets/astroid-explosion/astroid_explosion_phase_2.png";
-import AstroidExplosionPhaseThree from "../../../assets/astroid-explosion/astroid_explosion_phase_3.png";
-import AstroidExplosionPhaseFour from "../../../assets/astroid-explosion/astroid_explosion_phase_4.png";
+import AstroidExplosionPhaseOne from "../../../assets/images/astroid-explosion/astroid_explosion_phase_1.png";
+import AstroidExplosionPhaseTwo from "../../../assets/images/astroid-explosion/astroid_explosion_phase_2.png";
+import AstroidExplosionPhaseThree from "../../../assets/images/astroid-explosion/astroid_explosion_phase_3.png";
+import AstroidExplosionPhaseFour from "../../../assets/images/astroid-explosion/astroid_explosion_phase_4.png";
 import classes from "./astroid-explosion.module.css";
 import { useEffect, useState } from "react";
 import { formStoreActions } from "../../../store/form-store";

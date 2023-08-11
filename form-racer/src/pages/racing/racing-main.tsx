@@ -12,7 +12,7 @@ import GameOverScreen from "./game-over-screen/game-over-screen";
 import TestTimer from "./forms/test-timer/test-timer";
 import TestCompleteScreen from "./test-complete-screen/test-complete-screen";
 
-import HomeWorldImage from "../../assets/home-world-image/home_world.png";
+import HomeWorldImage from "../../assets/images/home-world-image/home_world.png";
 import { useEffect } from "react";
 import { formStoreActions } from "../../store/form-store";
 
@@ -83,8 +83,8 @@ const RacingTopElement = (): JSX.Element => {
       <LivesTrackerComponent />
       <TestTimer />
 
-      {gameOverScreenActive && <GameOverScreen />}
-      {endOfTestReached && <TestCompleteScreen />}
+      {gameOverScreenActive && userFailedGame && <GameOverScreen />}
+      {endOfTestReached && !userFailedGame && <TestCompleteScreen />}
     </main>
   );
 };

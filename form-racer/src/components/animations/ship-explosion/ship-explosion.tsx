@@ -1,7 +1,7 @@
-import ShipExplosionPhaseOne from "../../../assets/ship-explosion/ship_explosion_phase_1.png";
-import ShipExplosionPhaseTwo from "../../../assets/ship-explosion/ship_explosion_phase_2.png";
-import ShipExplosionPhaseThree from "../../../assets/ship-explosion/ship_explosion_phase_3.png";
-import ShipExplosionPhaseFour from "../../../assets/ship-explosion/ship_explosion_phase_4.png";
+import ShipExplosionPhaseOne from "../../../assets/images/ship-explosion/ship_explosion_phase_1.png";
+import ShipExplosionPhaseTwo from "../../../assets/images/ship-explosion/ship_explosion_phase_2.png";
+import ShipExplosionPhaseThree from "../../../assets/images/ship-explosion/ship_explosion_phase_3.png";
+import ShipExplosionPhaseFour from "../../../assets/images/ship-explosion/ship_explosion_phase_4.png";
 import { useState, useEffect } from "react";
 import classes from "./ship-explosion.module.css";
 const ShipExplosion = () => {

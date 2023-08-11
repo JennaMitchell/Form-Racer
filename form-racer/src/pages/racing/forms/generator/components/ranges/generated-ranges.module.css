@@ -1,67 +1,25 @@
-.generatedRangeMainContainer {
-  background-color: var(--black);
-  width: max(300px, 300px);
-  height: max-content;
-  max-height: max-content;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  position: relative;
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px white;
-  border: 1px solid white;
-}
-.generatedRangeQuestionContainer {
-  position: absolute;
-  top: -10px;
-  left: 5px;
-  font-family: var(--mainFamilyFont);
-  font-size: var(--r12);
-  line-height: var(--r12);
-  color: var(--black);
-  background-color: var(--main800);
-  padding: 5px 7.5px;
-  width: max-content;
-  max-height: max-content;
-  max-height: max-content;
-}
-.generatedRangeQuestion {
+.questionText {
   width: max(100%, 100%);
   font-family: var(--mainFamilyFont);
   font-size: var(--r12);
-  line-height: var(--r12);
+  line-height: var(--r16);
   color: var(--white);
+  padding: 0px 10px;
+  box-sizing: border-box;
 }
-
-.geenratedRangeInputContainer {
+.rangeInputContainer {
   width: max(100%, 100%);
   display: grid;
   grid-template-columns: 1fr max-content;
-  gap: 10px;
+  column-gap: 10px;
   align-items: center;
   justify-content: center;
-  position: relative;
-  align-items: center;
-  justify-content: space-between;
 }
-.rangeInputLabel {
-  font-family: var(--mainFamilyFont);
-  font-size: var(--r12);
-  line-height: var(--r12);
-  width: max-content;
-  color: var(--white);
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  visibility: hidden;
-}
+
 .rangeInput {
   width: max(100%, 100%);
   height: max(10px, 10px);
-  background-image: linear-gradient(90deg, var(--white), var(--main800));
+  background-image: linear-gradient(90deg, var(--main100), var(--main1000));
 }
 
 .rangeInput::-webkit-slider-thumb {
@@ -90,4 +48,5 @@
   padding: 5px;
   border-radius: 2.5px;
   background-color: var(--white);
+  color: var(--black);
 }

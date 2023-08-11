@@ -3,8 +3,8 @@ import {
   useAppSelector,
 } from "../../../../store/typescript-hooks";
 import classes from "./lives-tracker-component.module.css";
-import FullHeart from "../../../../assets/heart-images/full_heart.png";
-import EmptyHeart from "../../../../assets/heart-images/empty_heart.png";
+import FullHeart from "../../../../assets/images/heart-images/full_heart.png";
+import EmptyHeart from "../../../../assets/images/heart-images/empty_heart.png";
 import { useEffect } from "react";
 import { formStoreActions } from "../../../../store/form-store";
 const LivesTrackerComponent = (): JSX.Element => {

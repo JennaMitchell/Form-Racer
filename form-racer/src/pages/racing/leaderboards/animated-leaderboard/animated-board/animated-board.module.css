@@ -32,7 +32,7 @@
 .seperatingLeaderboard {
   width: max-content;
   max-width: max-content;
-  height: max(100%, 100%);
+  max-height: max-content;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -70,7 +70,7 @@
   opacity: 0;
 }
 .moveDown {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 .showEntry {
   opacity: 1;

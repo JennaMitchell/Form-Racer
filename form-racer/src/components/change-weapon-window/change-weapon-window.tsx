@@ -1,9 +1,9 @@
 import classes from "./change-weapon-window.module.css";
-import WeaponFireOne from "../../assets/ship-weapon-fires/weapon_fire_1.png";
-import WeaponFireTwo from "../../assets/ship-weapon-fires/weapon_fire_2.png";
-import WeaponFireThree from "../../assets/ship-weapon-fires/weapon_fire_3.png";
-import WeaponFireFour from "../../assets/ship-weapon-fires/weapon_fire_4.png";
-import WeaponFireFive from "../../assets/ship-weapon-fires/weapon_fire_5.png";
+import WeaponFireOne from "../../assets/images/ship-weapon-fires/weapon_fire_1.png";
+import WeaponFireTwo from "../../assets/images/ship-weapon-fires/weapon_fire_2.png";
+import WeaponFireThree from "../../assets/images/ship-weapon-fires/weapon_fire_3.png";
+import WeaponFireFour from "../../assets/images/ship-weapon-fires/weapon_fire_4.png";
+import WeaponFireFive from "../../assets/images/ship-weapon-fires/weapon_fire_5.png";
 import { useState, useMemo } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
 

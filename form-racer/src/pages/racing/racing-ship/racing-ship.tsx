@@ -60,7 +60,7 @@ const RacingShipContainer = () => {
 
     if (generatedQuestionData.length !== 0) {
       const activeQuestionElement = document.getElementById(
-        `${generatedQuestionData[activeQuestionNumber].id}`
+        `${generatedQuestionData[activeQuestionNumber - 1].id}`
       );
 
       if (weaponFireElement && activeQuestionElement) {

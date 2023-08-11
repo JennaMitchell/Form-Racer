@@ -3,7 +3,7 @@ export const updateUserAnswers = (
   dispatch: any,
   currentUserArray: any[],
   questionNumber: number,
-  userValue: string | number
+  userValue: string | number | boolean
 ) => {
   const copyOfUserAnswers = JSON.parse(JSON.stringify(currentUserArray));
   copyOfUserAnswers[questionNumber - 1] = userValue;
@@ -21,7 +21,6 @@ export const updateActiveQuestionNumber = (
     dispatch(formStoreActions.setEndOfTestReached(true));
     dispatch(formStoreActions.setStartQuestionTimer(false));
   } else {
-    console.log("UPDATED QUESTION NUMBER");
     dispatch(formStoreActions.setActiveQuestionNumber(newQuestionNumber));
     dispatch(formStoreActions.setActiveQuestionNumberUpdated(true));
   }

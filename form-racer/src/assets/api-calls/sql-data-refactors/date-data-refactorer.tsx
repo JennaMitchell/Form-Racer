@@ -17,7 +17,7 @@ export const dateDataRefactorer = (retrievedData: DatabaseEntryType[]) => {
       questionText: dataEntry.question_text,
       startDate: fomattedStartDate,
       endDate: formattedEndDate,
-      questionType: "date",
+      questionType: "dates",
       id: `date-question-${index}`,
     };
   });

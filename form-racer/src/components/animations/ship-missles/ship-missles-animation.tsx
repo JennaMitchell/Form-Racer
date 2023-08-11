@@ -1,8 +1,8 @@
-import ShipMissilesOne from "../../../assets/ship-weapon-fires/weapon_fire_1.png";
-import ShipMissilesTwo from "../../../assets/ship-weapon-fires/weapon_fire_2.png";
-import ShipMissilesThree from "../../../assets/ship-weapon-fires/weapon_fire_3.png";
-import ShipMissilesFour from "../../../assets/ship-weapon-fires/weapon_fire_4.png";
-import ShipMissilesFive from "../../../assets/ship-weapon-fires/weapon_fire_5.png";
+import ShipMissilesOne from "../../../assets/images/ship-weapon-fires/weapon_fire_1.png";
+import ShipMissilesTwo from "../../../assets/images/ship-weapon-fires/weapon_fire_2.png";
+import ShipMissilesThree from "../../../assets/images/ship-weapon-fires/weapon_fire_3.png";
+import ShipMissilesFour from "../../../assets/images/ship-weapon-fires/weapon_fire_4.png";
+import ShipMissilesFive from "../../../assets/images/ship-weapon-fires/weapon_fire_5.png";
 import { useAppSelector } from "../../../store/typescript-hooks";
 import { useMemo } from "react";
 import classes from "./ship-missles-animation.module.css";

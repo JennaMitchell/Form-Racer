@@ -3,16 +3,18 @@ import sharedClasses from "../shared-popups-css.module.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useAppDispatch } from "../../../store/typescript-hooks";
 import { popupsStoreActions } from "../../../store/popups-store";
-import EasyDiffIcon from "../../../assets/icons/setup-popup/easy-diff-icon.png";
-import MediumDiffIcon from "../../../assets/icons/setup-popup/medium-diff-icon.png";
-import HardDiffIcon from "../../../assets/icons/setup-popup/hard-diff-icon.png";
-import ColorInputsIcon from "../../../assets/icons/setup-popup/color-inputs.png";
-import CommentInputsIcon from "../../../assets/icons/setup-popup/comment-inputs.png";
-import DateInputsIcon from "../../../assets/icons/setup-popup/date-inputs.png";
-import PictureInputsIcon from "../../../assets/icons/setup-popup/picture-inputs.png";
-import TextInputsIcon from "../../../assets/icons/setup-popup/text-inputs.png";
-import MultipleChoiceIcon from "../../../assets/icons/setup-popup/multiple-choice-icon.png";
+import EasyDiffIcon from "../../../assets/images/icons/setup-popup/easy-diff-icon.png";
+import MediumDiffIcon from "../../../assets/images/icons/setup-popup/medium-diff-icon.png";
+import HardDiffIcon from "../../../assets/images/icons/setup-popup/hard-diff-icon.png";
+import ColorInputsIcon from "../../../assets/images/icons/setup-popup/color-inputs.png";
+import CommentInputsIcon from "../../../assets/images/icons/setup-popup/comment-inputs.png";
+import DateInputsIcon from "../../../assets/images/icons/setup-popup/date-inputs.png";
+import PictureInputsIcon from "../../../assets/images/icons/setup-popup/picture-inputs.png";
+import TextInputsIcon from "../../../assets/images/icons/setup-popup/text-inputs.png";
+import MultipleChoiceIcon from "../../../assets/images/icons/setup-popup/multiple-choice-icon.png";
 import { useState, MouseEvent, useMemo, useCallback, useEffect } from "react";
+import { testResetFunction } from "../../../assets/test-functions/test-function";
+import { formStoreActions } from "../../../store/form-store";
 import { userInfoStoreActions } from "../../../store/user-info-store";
 const GameSetupPopup = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -64,7 +66,7 @@ const GameSetupPopup = (): JSX.Element => {
       id: "popup-input-type-button-slider",
     },
     {
-      buttonName: "Check Box",
+      buttonName: "Checkbox",
       icon: PictureInputsIcon,
       altText: "pictures input icon",
       id: "popup-input-type-button-check box",
@@ -197,10 +199,13 @@ const GameSetupPopup = (): JSX.Element => {
     submitButtonValidation();
   }, [submitButtonValidation]);
 
-  const submitButtonHandler = () => {
+  const startButtonHandler = () => {
     if (submitButtonActive) {
       dispatch(userInfoStoreActions.setGameSettings(gameSetupFormData));
       closingButtonHandler();
+      testResetFunction(dispatch);
+
+      dispatch(formStoreActions.setStartTest(true));
     }
   };
 
@@ -320,9 +325,9 @@ const GameSetupPopup = (): JSX.Element => {
             submitButtonActive && classes.activeStartButton
           }`}
           disabled={submitButtonActive}
-          onClick={submitButtonHandler}
+          onClick={startButtonHandler}
         >
-          Submit
+          Start
         </button>
       </div>
     </div>

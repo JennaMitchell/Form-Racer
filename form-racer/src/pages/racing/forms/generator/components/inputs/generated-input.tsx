@@ -13,7 +13,8 @@ import {
 } from "../../../../../../store/typescript-hooks";
 
 import classes from "./generated-input.module.css";
-import { enterPressHandler } from "../../../../lives-tracker/lives-tracker-functions";
+import sharedClasses from "../components-shared-css.module.css";
+import { decreaseLivesTracker } from "../../../../lives-tracker/lives-tracker-functions";
 
 import {
   updateUserAnswers,
@@ -75,8 +76,16 @@ const GeneratedInput = ({
 
   const [errorMessageActive, setErrorMessageActive] = useState(false);
   const [submitMessageActive, setSubmitMessageActive] = useState(false);
-  const [triggerTimerAnimation, setTriggerAnimation] = useState(false);
-  const [retriggerAnimation, setRetriggerAnimation] = useState(false);
+  const [triggerAnimation, setTriggerAnimation] = useState(false);
+
+  const [resetIntermVar, setResetIntermVar] = useState(false);
+  // resetIntermVar is to allow the astroid to re-render at the top of the page then trigger the move animation
+
+  const [resetTimeoutTriggered, setResetTimeoutTriggered] = useState(false);
+  // resetTImeout is here so that the reset timeout only triggers once giving time for the astroid to move back to the top before
+  // refreshing
+  // issue arising when the moving backend can refrest trigger when
+
   const astroidExplosionTriggered = useAppSelector(
     (state) => state.formRacing.astroidExplosionTriggered
   );
@@ -99,6 +108,36 @@ const GeneratedInput = ({
     setTriggerAnimation(true);
     dispatch(formStoreActions.setStartQuestionTimer(true));
   }, [questionTimerHandler, dispatch]);
+  useEffect(() => {
+    if (triggerAnimation) {
+      setTriggerAnimation(false);
+      questionTimerHandler();
+    }
+  }, [triggerAnimation, dispatch, questionTimerHandler]);
+
+  const enterPressHandler = (
+    event: KeyboardEvent<HTMLInputElement>,
+    inputValue: string,
+    pattern: string,
+    dispatch: any,
+    userLivesArray: boolean[]
+  ) => {
+    const keyCode = event.key;
+
+    if (inputValue) {
+      const regexPattern = new RegExp(pattern);
+      const patternMet = regexPattern.test(inputValue);
+
+      if (keyCode === "Enter" && patternMet) {
+        return { enterPressed: true, patternMet: true };
+      } else if (!patternMet && keyCode === "Enter") {
+        decreaseLivesTracker(dispatch, userLivesArray);
+        return { enterPressed: false, patternMet: false };
+      } else if (keyCode !== "Enter" && patternMet) {
+        return { enterPressed: false, patternMet: true };
+      }
+    }
+  };
 
   // Handeling User Inputs
 
@@ -138,7 +177,6 @@ const GeneratedInput = ({
       const patternMet = regexPattern.test(notNullTargetElement.value);
 
       if (patternMet) {
-        setSubmitMessageActive(true);
       }
       if (!patternMet && submitMessageActive) {
         setSubmitMessageActive(false);
@@ -199,23 +237,48 @@ const GeneratedInput = ({
       const topContainerCurrent = topContainerRef.current;
       if (topContainerCurrent) {
         const notNullCurrentRef = topContainerCurrent;
+        // moving next question to the top of the viewport and transition none so its instantaneous
         notNullCurrentRef.style.top = "0px";
+        notNullCurrentRef.style.transition = `none`;
       }
-      console.log("MOVE RETRIEGGER");
-      setRetriggerAnimation(true);
-      setTriggerAnimation(false);
+
+      setResetIntermVar(true);
 
       dispatch(formStoreActions.setActiveQuestionNumberUpdated(false));
     }
   }, [dispatch, activeQuestionNumberUpdated]);
 
   useEffect(() => {
-    if (retriggerAnimation) {
-      console.log("ANIMATED TRIGGERED");
-      setTriggerAnimation(true);
-      setRetriggerAnimation(false);
+    if (activeQuestionNumberUpdated) {
+      const topContainerCurrent = topContainerRef.current;
+      if (topContainerCurrent) {
+        const notNullCurrentRef = topContainerCurrent;
+        // moving next question to the top of the viewport and transition none so its instantaneous
+        notNullCurrentRef.style.top = "0px";
+        notNullCurrentRef.style.transition = `none`;
+      }
+
+      setResetIntermVar(true);
+
+      dispatch(formStoreActions.setActiveQuestionNumberUpdated(false));
     }
-  }, [retriggerAnimation, dispatch]);
+  }, [dispatch, activeQuestionNumberUpdated]);
+
+  useEffect(() => {
+    if (resetIntermVar && !resetTimeoutTriggered) {
+      setTimeout(
+        () => {
+          setTriggerAnimation(true);
+          setResetIntermVar(false);
+          setResetTimeoutTriggered(false);
+        },
+
+        100
+      );
+
+      setResetTimeoutTriggered(true);
+    }
+  }, [resetIntermVar, resetTimeoutTriggered]);
 
   useEffect(() => {
     if (testResetTriggered) {
@@ -229,9 +292,9 @@ const GeneratedInput = ({
 
   return (
     <div
-      className={`${classes.inputTopContainer} ${
-        triggerTimerAnimation && classes.triggerAnimation
-      }`}
+      className={`${sharedClasses.topContainer}  ${
+        astroidExplosionTriggered && sharedClasses.hideQuestion
+      } `}
       ref={topContainerRef}
     >
       {astroidExplosionTriggered && <AstroidExplosion />}
@@ -239,13 +302,13 @@ const GeneratedInput = ({
         <PressEnterMessage />
       )}
       {!astroidExplosionTriggered && <AstroidImage />}
+
       <div
-        className={`${classes.generatedInputQuestionContainer} ${
-          astroidExplosionTriggered && classes.hideQuestion
+        className={`${sharedClasses.questionContainer} ${
+          astroidExplosionTriggered && sharedClasses.hideQuestion
         }`}
-        key={`${id}-${label}-input-container-key`}
       >
-        <p className={classes.generatedInputQuestionNumber}>
+        <p className={sharedClasses.questionLabel}>
           Question {questionNumber}.
         </p>
 
@@ -277,10 +340,10 @@ const GeneratedInput = ({
         </div>
         {errorMessageActive && (
           <span
-            className={classes.inputErrorMessage}
+            className={sharedClasses.errorMessage}
             key={`${id}-${label}-span-key`}
           >
-            ERROR
+            Incorrect Answer
           </span>
         )}
       </div>
