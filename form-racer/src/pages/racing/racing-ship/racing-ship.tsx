@@ -7,7 +7,7 @@ import { racerData } from "../../../assets/constants/constants";
 import { useState, useCallback, useEffect } from "react";
 import RacingShipEngines from "./ship-engines/racing-ship-engines";
 import ShipExplosion from "../../../components/animations/ship-explosion/ship-explosion";
-import { testResetFunction } from "../../../assets/test-functions/test-function";
+
 import ShipMissilesAnimation from "../../../components/animations/ship-missles/ship-missles-animation";
 import { formStoreActions } from "../../../store/form-store";
 const RacingShipContainer = () => {
@@ -134,17 +134,6 @@ const RacingShipContainer = () => {
 
     return () => clearTimeout(shipAnimationInterval);
   }, [selectedShipShakeHandler]);
-
-  useEffect(() => {
-    if (endOfTestReached && userFailedTest) {
-      const resetTestTimeout = setTimeout(() => {
-        testResetFunction(dispatch);
-      }, 3000);
-      return () => {
-        clearTimeout(resetTestTimeout);
-      };
-    }
-  }, [endOfTestReached, userFailedTest, dispatch]);
 
   useEffect(() => {
     if (endOfTestReached && !userFailedTest && homeWorldAnimationComplete) {

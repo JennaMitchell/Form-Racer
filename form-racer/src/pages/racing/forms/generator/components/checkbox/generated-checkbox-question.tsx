@@ -86,15 +86,30 @@ const GeneratedCheckboxQuestion = ({
       const topContainerDivElement = topContainerRefCurrent;
 
       topContainerDivElement.style.transition = `all ${timePerQuestionInSeconds}s ease-in`;
-      topContainerDivElement.style.top = `calc(100vh - 500px)`;
+      topContainerDivElement.style.top = `calc(100vh - 450px)`;
     }
-  }, [timePerQuestionInSeconds]);
+    dispatch(formStoreActions.setStartQuestionTimer(true));
+  }, [timePerQuestionInSeconds, dispatch]);
 
   // useEffect below is used to initalize the astroid to move on the first render
   useEffect(() => {
-    setTriggerAnimation(true);
-    dispatch(formStoreActions.setStartQuestionTimer(true));
-  }, [dispatch]);
+    const topContainerCurrent = topContainerRef.current;
+
+    if (topContainerCurrent) {
+      const notNullCurrentRef = topContainerCurrent;
+      // moving next question to the top of the viewport and transition none so its instantaneous
+      notNullCurrentRef.style.top = "0px";
+      notNullCurrentRef.style.transition = `none`;
+    }
+    setTimeout(
+      () => {
+        setTriggerAnimation(true);
+        dispatch(formStoreActions.setStartQuestionTimer(true));
+      },
+
+      100
+    );
+  }, [dispatch, questionTimerHandler]);
 
   // useEffect used to trigger the astroid to move
   useEffect(() => {

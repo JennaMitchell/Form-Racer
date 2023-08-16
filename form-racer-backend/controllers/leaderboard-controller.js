@@ -23,7 +23,6 @@ exports.getLeaderboardData = async (req, res) => {
 
   dbConnection.connect((err) => {
     if (err) throw err;
-    console.log("MYSQL CONNECTED");
   });
 
   dbConnection.query(query, (err, data) => {
@@ -33,7 +32,6 @@ exports.getLeaderboardData = async (req, res) => {
   });
   dbConnection.end((err) => {
     if (err) throw err;
-    console.log("MYSQL DISCONNECTED");
   });
 };
 
@@ -65,7 +63,6 @@ exports.updateLeaderboardData = (req, res) => {
 
   dbConnection.connect((err) => {
     if (err) throw err;
-    console.log("MYSQL CONNECTED");
   });
 
   dbConnection.query(query, (err, data) => {

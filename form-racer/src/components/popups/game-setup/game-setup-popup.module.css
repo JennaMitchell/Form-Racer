@@ -1,10 +1,12 @@
 .popupSectionTitle {
   font-size: var(--r20);
   width: max-content;
+  height: max-content;
   max-height: max-content;
   line-height: var(--r20);
   color: var(--black);
   width: max(190px, 190px);
+  position: relative;
 }
 .popupDifficultyButton {
   font-size: var(--r14);
@@ -41,11 +43,13 @@
   font-size: inherit;
   padding: 0px;
   margin: 0px;
+  position: relative;
 }
 .activeDifficultyButton {
   background-color: black;
   box-shadow: none;
   color: white;
+  position: relative;
 }
 .popupNumberOfQuestions {
   width: max(100%, 100%);
@@ -148,4 +152,31 @@
 .activeStartButton {
   color: black;
   background-color: white;
+}
+@media (max-width: 400px) {
+  .popupSectionTitle {
+    font-size: var(--r18);
+    line-height: var(--r16);
+  }
+  .popupDifficultyButton {
+    font-size: var(--r12);
+    line-height: var(--r12);
+  }
+  .popupNumberOfQuestionsButton {
+    width: max(75px, 75px);
+    font-size: var(--r10);
+    line-height: var(--r10);
+  }
+  .popupQuestionTypeButton > p {
+    font-size: var(--r12);
+    line-height: var(--r12);
+  }
+  .popupQuestionTypeButton > img {
+    width: max(15px, 15px);
+    height: max(15px, 15px);
+  }
+  .startButton {
+    font-size: var(--r20);
+    line-height: var(--r20);
+  }
 }

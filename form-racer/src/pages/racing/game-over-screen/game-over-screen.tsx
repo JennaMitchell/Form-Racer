@@ -1,12 +1,13 @@
-import { formStoreActions } from "../../../store/form-store";
 import { useAppDispatch } from "../../../store/typescript-hooks";
+import { testResetFunction } from "../../../assets/test-functions/test-function";
 import classes from "./game-over-screen.module.css";
 const GameOverScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const continueButtonHandler = () => {
-    dispatch(formStoreActions.setGameOverScreenActive(false));
+    testResetFunction(dispatch);
   };
+
   return (
     <div className={classes.gameOverScreenTopContainer}>
       <p className={classes.gameOverTitle}> GAME OVER</p>

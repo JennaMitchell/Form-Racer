@@ -39,7 +39,6 @@ const AstroidExplosion = (): JSX.Element => {
       activeAstroidExplosionPhase === 4 &&
       astroidExplosionTriggered
     ) {
-      console.log(44);
       dispatch(formStoreActions.setAstroidDestroyed(true));
       setActiveAstroidExplosionPhase(1);
     }

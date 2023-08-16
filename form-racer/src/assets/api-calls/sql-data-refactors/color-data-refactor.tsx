@@ -80,8 +80,6 @@ export const hexColorToArrayConverter = (colorString: string) => {
     const thirdColorDigitPair = splitColorString.slice(4, 6);
     colorDigitArray[2] = hexToDeximalPairConvertor(thirdColorDigitPair);
 
-    console.log(colorDigitArray);
-
     return colorDigitArray;
   } else {
     return [0, 0, 0];

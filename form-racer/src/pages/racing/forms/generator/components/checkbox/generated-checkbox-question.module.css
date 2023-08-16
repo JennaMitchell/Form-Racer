@@ -1,20 +1,9 @@
-.generatedCheckBoxQuestionNumberLabel {
-  position: absolute;
-  left: 10px;
-  top: -10px;
-  width: max-content;
-  max-width: max-content;
-  padding: 2.5px 7.5px;
-  background-color: var(--main800);
-  color: var(--black);
-  font-size: var(--r12);
-}
 .generatedCheckBoxQuestion,
 .checkboxTextValue {
   width: max(100%, 100%);
   max-height: max-content;
-  font-size: var(--r12);
-  color: var(--black);
+  font-size: inherit;
+  color: var(--white);
 }
 .generatedCheckboxInputContainer {
   width: max(100%, 100%);
@@ -24,6 +13,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  font-size: inherit;
 }
 .checkBoxInput {
   width: max(15px, 15px);
@@ -36,7 +26,9 @@
   width: max-content;
   max-width: max-content;
   max-height: max-content;
-  font-size: var(--r12);
+  font-size: inherit;
 
-  color: var(--black);
+  color: var(--white);
+}
+@media (max-width: 950px) {
 }

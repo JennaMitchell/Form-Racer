@@ -86,7 +86,7 @@ const AnimatedBoard = ({
         previousLeaderboardDataIndex++
       ) {
         const entry = previousLeaderboardData[previousLeaderboardDataIndex];
-        if (newUserRanking <= +entry.ranking) {
+        if (newUserRanking > +entry.ranking) {
           tempFirstHalfArray.push(entry);
         } else {
           tempSecondHalfArray.push(entry);
@@ -256,7 +256,7 @@ const AnimatedBoard = ({
       id="animated-leaderboard-container"
     >
       {newLeaderboardData.length !== 0 && (
-        <div className={classes.newLeaderBoardContainer}>
+        <div className={`${classes.newLeaderBoardContainer}   `}>
           {newLeaderboardData.map((entry, index) => {
             return (
               <div
@@ -282,9 +282,9 @@ const AnimatedBoard = ({
 
       {firstHalfOfLeaderboard.length !== 0 && (
         <div
-          className={`${classes.seperatingLeaderboard}  ${
-            hidePreviousLeaderboard && classes.hideOldLeaderboard
-          }  `}
+          className={`${classes.seperatingLeaderboard} ${
+            classes.higherLeaderboard
+          }  ${hidePreviousLeaderboard && classes.hideOldLeaderboard}`}
         >
           {firstHalfOfLeaderboard.map((entry, index) => {
             return (
@@ -293,7 +293,7 @@ const AnimatedBoard = ({
                 id={`leaderboard-row-entry-${index + 1}`}
                 key={`leaderboard-row-entry-${index + 1}-key`}
               >
-                <p>{entry.ranking + 1}</p>
+                <p>{entry.ranking}</p>
 
                 <p>{entry.username}</p>
                 <p>{entry.users_time}</p>
@@ -309,7 +309,9 @@ const AnimatedBoard = ({
             seperateAnimationTrigger && classes.moveDown
           }
           ${fadeUserScoreIn && classes.moveDown} 
-          ${hidePreviousLeaderboard && classes.hideOldLeaderboard} `}
+          ${classes.lowerLeaderboard}
+          ${hidePreviousLeaderboard && classes.hideOldLeaderboard}
+        `}
         >
           {secondHalfOfLeadboard.map((entry, index) => {
             return (

@@ -9,7 +9,6 @@ const NavBar = (): JSX.Element => {
   const buttonIdsList = [
     "nav-bar-start-button",
     "nav-bar-settings-button",
-
     "nav-bar-racer-button",
   ];
   const [activeButtonsIdsArray, setActiveButtonsIdsArray] = useState([
@@ -75,7 +74,7 @@ const NavBar = (): JSX.Element => {
   };
 
   return (
-    <div className={classes.navBarContainer}>
+    <>
       {/* <button
         className={`${classes.navBarButton} 
           ${
@@ -101,7 +100,7 @@ const NavBar = (): JSX.Element => {
         className={`${classes.navBarButton} 
           ${
             activeButtonsIdsArray[0] === buttonIdsList[0] &&
-            classes.navBarButtonLeft
+            classes.startButtonLeft
           } 
           ${
             activeButtonsIdsArray[1] === buttonIdsList[0] &&
@@ -122,7 +121,7 @@ const NavBar = (): JSX.Element => {
         className={`${classes.navBarButton} 
             ${
               activeButtonsIdsArray[0] === buttonIdsList[1] &&
-              classes.navBarButtonLeft
+              classes.settingBarButtonLeft
             } 
             ${
               activeButtonsIdsArray[1] === buttonIdsList[1] &&
@@ -159,7 +158,7 @@ const NavBar = (): JSX.Element => {
       >
         Racer
       </button>
-    </div>
+    </>
   );
 };
 export default NavBar;

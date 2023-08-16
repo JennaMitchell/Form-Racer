@@ -11,11 +11,11 @@
   padding: 0px;
   background-color: black;
   background-size: contain;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 .racingMainContainer {
-  width: max(1000px, 1000px);
+  width: max(100vw, 100vw);
   height: max-content;
   max-height: max-content;
   background-color: transparent;
@@ -81,4 +81,27 @@
 .startButton:hover {
   background-color: var(--main200);
   cursor: pointer;
+}
+.timersContainer {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: fixed;
+  left: 40px;
+  top: 40px;
+}
+@media (max-width: 950px) {
+  .timersContainer {
+    left: 40px;
+    top: 30px;
+    gap: 20px;
+  }
+}
+@media (max-width: 650px) {
+  .timersContainer {
+    left: 20px;
+    top: 30px;
+    gap: 10px;
+  }
 }

@@ -82,9 +82,8 @@ const GeneratedInput = ({
   // resetIntermVar is to allow the astroid to re-render at the top of the page then trigger the move animation
 
   const [resetTimeoutTriggered, setResetTimeoutTriggered] = useState(false);
-  // resetTImeout is here so that the reset timeout only triggers once giving time for the astroid to move back to the top before
+  // resetTimeout is here so that the reset timeout only triggers once giving time for the astroid to move back to the top before
   // refreshing
-  // issue arising when the moving backend can refrest trigger when
 
   const astroidExplosionTriggered = useAppSelector(
     (state) => state.formRacing.astroidExplosionTriggered
@@ -95,19 +94,27 @@ const GeneratedInput = ({
 
   // Handeling question Timer
   const questionTimerHandler = useCallback(() => {
-    const topContainerRefCurrent = topContainerRef?.current;
+    const topContainerRefCurrent = topContainerRef.current;
     if (topContainerRefCurrent) {
       const topContainerDivElement = topContainerRefCurrent;
 
       topContainerDivElement.style.transition = `all ${timePerQuestionInSeconds}s ease-in`;
+      topContainerDivElement.style.top = `calc(100vh - 450px)`;
     }
-  }, [timePerQuestionInSeconds]);
-
-  useEffect(() => {
-    questionTimerHandler();
-    setTriggerAnimation(true);
     dispatch(formStoreActions.setStartQuestionTimer(true));
-  }, [questionTimerHandler, dispatch]);
+  }, [timePerQuestionInSeconds, dispatch]);
+
+  // useEffect below is used to initalize the astroid to move on the first render
+  useEffect(() => {
+    setTimeout(
+      () => {
+        setTriggerAnimation(true);
+        dispatch(formStoreActions.setStartQuestionTimer(true));
+      },
+
+      100
+    );
+  }, [dispatch]);
   useEffect(() => {
     if (triggerAnimation) {
       setTriggerAnimation(false);

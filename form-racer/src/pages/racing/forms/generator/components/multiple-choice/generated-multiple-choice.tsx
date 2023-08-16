@@ -38,9 +38,8 @@ const GeneratedMultipleChoice = ({
   // resetIntermVar is to allow the astroid to re-render at the top of the page then trigger the move animation
 
   const [resetTimeoutTriggered, setResetTimeoutTriggered] = useState(false);
-  // resetTImeout is here so that the reset timeout only triggers once giving time for the astroid to move back to the top before
+  // resetTimeout is here so that the reset timeout only triggers once giving time for the astroid to move back to the top before
   // refreshing
-  // issue arising when the moving backend can refrest trigger when
 
   const userAnswersArray = useAppSelector(
     (state) => state.formRacing.userAnswersArray
@@ -79,7 +78,7 @@ const GeneratedMultipleChoice = ({
       const topContainerDivElement = topContainerRefCurrent;
 
       topContainerDivElement.style.transition = `all ${timePerQuestionInSeconds}s ease-in`;
-      topContainerDivElement.style.top = `calc(100vh - 500px)`;
+      topContainerDivElement.style.top = `calc(100vh - 450px)`;
     }
     dispatch(formStoreActions.setStartQuestionTimer(true));
   }, [timePerQuestionInSeconds, dispatch]);
@@ -132,8 +131,6 @@ const GeneratedMultipleChoice = ({
     }
   }, [astroidDestroyed, dispatch, questionNumber, totalNumberOfQuestions]);
 
-  // reset astroid position when active question number is updated
-
   useEffect(() => {
     if (activeQuestionNumberUpdated) {
       const topContainerCurrent = topContainerRef.current;
@@ -150,22 +147,7 @@ const GeneratedMultipleChoice = ({
     }
   }, [dispatch, activeQuestionNumberUpdated]);
 
-  useEffect(() => {
-    if (resetIntermVar && !resetTimeoutTriggered) {
-      setTimeout(
-        () => {
-          setTriggerAnimation(true);
-          setResetIntermVar(false);
-          setResetTimeoutTriggered(false);
-          errorMessage.length !== 0 && setErrorMessage("");
-        },
-
-        100
-      );
-
-      setResetTimeoutTriggered(true);
-    }
-  }, [resetIntermVar, resetTimeoutTriggered, errorMessage]);
+  // handeling test resting
 
   useEffect(() => {
     if (testResetTriggered) {
@@ -177,6 +159,60 @@ const GeneratedMultipleChoice = ({
     }
   }, [testResetTriggered]);
 
+  useEffect(() => {
+    if (resetIntermVar && !resetTimeoutTriggered) {
+      setTimeout(
+        () => {
+          setTriggerAnimation(true);
+          setResetIntermVar(false);
+          setResetTimeoutTriggered(false);
+        },
+
+        100
+      );
+
+      setResetTimeoutTriggered(true);
+    }
+  }, [resetIntermVar, resetTimeoutTriggered]);
+
+  // useEffect below is used to initalize the astroid to move on the first render
+  useEffect(() => {
+    const topContainerCurrent = topContainerRef.current;
+
+    if (topContainerCurrent) {
+      const notNullCurrentRef = topContainerCurrent;
+      // moving next question to the top of the viewport and transition none so its instantaneous
+      notNullCurrentRef.style.top = "0px";
+      notNullCurrentRef.style.transition = `none`;
+    }
+    setTimeout(
+      () => {
+        setTriggerAnimation(true);
+        dispatch(formStoreActions.setStartQuestionTimer(true));
+      },
+
+      100
+    );
+  }, [dispatch, questionTimerHandler]);
+  // useEffect below is used to initalize the astroid to move on the first render
+  useEffect(() => {
+    setTimeout(
+      () => {
+        setTriggerAnimation(true);
+        dispatch(formStoreActions.setStartQuestionTimer(true));
+      },
+
+      100
+    );
+  }, [dispatch]);
+
+  // useEffect used to trigger the astroid to move
+  useEffect(() => {
+    if (triggerAnimation) {
+      setTriggerAnimation(false);
+      questionTimerHandler();
+    }
+  }, [triggerAnimation, questionTimerHandler]);
   const radioButtonClickHandler = (e: MouseEvent<HTMLElement>) => {
     let targetElement = e.target as HTMLElement;
     let targetId = targetElement.id;

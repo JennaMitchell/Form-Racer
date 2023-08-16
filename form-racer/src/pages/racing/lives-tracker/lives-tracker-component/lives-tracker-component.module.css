@@ -1,9 +1,7 @@
 .livesTrackerContainer {
   width: max-content;
   max-width: max-content;
-  position: fixed;
-  top: 50px;
-  left: 50px;
+  position: relative;
   border: 1px solid white;
   display: flex;
   gap: 10px;
@@ -38,5 +36,32 @@
   }
   100% {
     box-shadow: 0px 0px 50px red;
+  }
+}
+@media (max-width: 950px) {
+  .heartImage {
+    width: max(25px, 25px);
+    height: max(25px, 25px);
+    object-fit: cover;
+  }
+  .livesLabel {
+    font-size: var(--r8);
+    line-height: var(--r8);
+  }
+}
+@media (max-width: 650px) {
+  .livesTrackerContainer {
+    border-radius: 5px;
+    padding: 10px 10px;
+  }
+  .heartImage {
+    width: max(15px, 15px);
+    height: max(15px, 15px);
+    object-fit: cover;
+  }
+  .livesLabel {
+    font-size: var(--r6);
+    line-height: var(--r6);
+    padding: 0px 2.5px;
   }
 }

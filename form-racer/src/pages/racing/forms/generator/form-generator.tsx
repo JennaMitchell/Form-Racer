@@ -73,24 +73,6 @@ const FormGeneratorMainPage = (): JSX.Element => {
   useEffect(() => {
     if (startTest && !testStarted) {
       const generateGameData = async () => {
-        const generatedGameData = {
-          timeDurationInSeconds: 0,
-          generatedQuestions: {},
-        };
-        switch (userGameSettings.difficulty) {
-          case "easy":
-            generatedGameData.timeDurationInSeconds = 1000;
-            break;
-          case "medium":
-            generatedGameData.timeDurationInSeconds = 500;
-            break;
-          case "hard":
-            generatedGameData.timeDurationInSeconds = 200;
-            break;
-          default:
-            break;
-        }
-
         const generatedNumberOfQuestionsPerType =
           numberOfQuestionsPerTypeGenerator(
             userGameSettings.numberOfQuestions,
@@ -101,10 +83,30 @@ const FormGeneratorMainPage = (): JSX.Element => {
           generatedNumberOfQuestionsPerType,
           userGameSettings.selectedQuestionTypes
         );
+
+        // there is a max of ten questions pet type so this accounts for when
+
+        if (
+          userGameSettings.numberOfQuestions === 20 &&
+          userGameSettings.selectedQuestionTypes.length === 1
+        ) {
+          const copyOfGeneratedDataArray = JSON.parse(
+            JSON.stringify(generatedDataArray)
+          );
+          const numberOfQuestionsToAdd =
+            userGameSettings.numberOfQuestions - generatedDataArray.length;
+
+          for (
+            let indexOfCopy = 0;
+            indexOfCopy < numberOfQuestionsToAdd;
+            indexOfCopy++
+          ) {
+            generatedDataArray.push(copyOfGeneratedDataArray[indexOfCopy]);
+          }
+        }
         const userAnswerArray = generatedDataArray.map(() => {
           return "";
         });
-
         dispatch(formStoreActions.setGeneratedQuestionData(generatedDataArray));
         dispatch(formStoreActions.setUserAnswersArray(userAnswerArray));
         dispatch(formStoreActions.setResetTestTimer(true));
@@ -262,7 +264,6 @@ const FormGeneratorMainPage = (): JSX.Element => {
               break;
           }
         }
-        console.log(generatedDataArray);
 
         return generatedDataArray;
       };

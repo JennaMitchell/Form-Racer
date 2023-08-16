@@ -36,6 +36,13 @@ const QuestionTimerWindow = (): JSX.Element => {
   const endOfTestReached = useAppSelector(
     (state) => state.formRacing.endOfTestReached
   );
+
+  // useEffect To update the question timer when it changes
+
+  useEffect(() => {
+    setQuestionTimeRemaining(gameSettings.timePerQuestionInSeconds);
+  }, [gameSettings.timePerQuestionInSeconds]);
+
   const failedQuestionHandler = useCallback(() => {
     decreaseLivesTracker(dispatch, activeLivesArray);
     const newPossibleActiveQuestion = activeQuestionNumber + 1;
@@ -106,7 +113,11 @@ const QuestionTimerWindow = (): JSX.Element => {
         questionTimeRemaining <= 20 &&
         questionTimeRemaining > 10 &&
         classes.questionTimeCautionContainer
-      } ${questionTimeRemaining <= 10 && classes.questionTimeWarningContainer}`}
+      } ${
+        questionTimeRemaining <= 10 &&
+        questionTimeRemaining !== 0 &&
+        classes.questionTimeWarningContainer
+      }`}
     >
       <p className={`${classes.questionTime}`}>
         {startQuestionTimer ? questionTimeRemaining : 0}s

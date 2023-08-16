@@ -16,9 +16,6 @@ import HomeWorldImage from "../../assets/images/home-world-image/home_world.png"
 import { useEffect } from "react";
 import { formStoreActions } from "../../store/form-store";
 
-// import { useEffect } from "react";
-// import { formStoreActions } from "../../store/form-store";
-
 const RacingTopElement = (): JSX.Element => {
   useSetWindowScrollBarVar();
   const dispatch = useAppDispatch();
@@ -43,16 +40,6 @@ const RacingTopElement = (): JSX.Element => {
   const testResetTriggered = useAppSelector(
     (state) => state.formRacing.testResetTriggered
   );
-
-  // useEffect(() => {
-  //   const deleteTime = setTimeout(() => {
-  //     dispatch(formStoreActions.setEndOfTestReached(true));
-  //   }, 1000);
-
-  //   return () => {
-  //     clearTimeout(deleteTime);
-  //   };
-  // }, [dispatch]);
 
   useEffect(() => {
     if (testResetTriggered) {
@@ -79,9 +66,11 @@ const RacingTopElement = (): JSX.Element => {
         <FormGeneratorMainPage />
       </div>
       <RacingShipContainer />
-      <QuestionTimerWindow />
-      <LivesTrackerComponent />
-      <TestTimer />
+      <div className={classes.timersContainer}>
+        <LivesTrackerComponent />
+        <TestTimer />
+        <QuestionTimerWindow />
+      </div>
 
       {gameOverScreenActive && userFailedGame && <GameOverScreen />}
       {endOfTestReached && !userFailedGame && <TestCompleteScreen />}

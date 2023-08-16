@@ -11,7 +11,7 @@ const ShipExplosion = () => {
     if (activeShipExplosionPhase !== 4) {
       const changeShipImageTimeOut = setTimeout(() => {
         setActiveShipExplosionPhase(activeShipExplosionPhase + 1);
-      }, 500);
+      }, 250);
       return () => {
         clearTimeout(changeShipImageTimeOut);
       };

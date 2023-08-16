@@ -27,7 +27,6 @@ exports.getAllQuestionData = (req, res) => {
 
   dbConnection.connect((err) => {
     if (err) throw err;
-    console.log("MYSQL CONNECTED");
   });
 
   dbConnection.query(query, (err, data) => {
@@ -37,15 +36,12 @@ exports.getAllQuestionData = (req, res) => {
   });
   dbConnection.end((err) => {
     if (err) throw err;
-    console.log("MYSQL DISCONNECTED");
   });
 };
 
 exports.getQuestionDataWithLimit = (req, res) => {
   const requestData = JSON.parse(req.params.requestData);
   let query = "";
-  console.log(requestData);
-
   const validDatabase = generalFunctions.validDatabaseCheck(
     requestData.database,
     "question_data"
@@ -73,16 +69,13 @@ exports.getQuestionDataWithLimit = (req, res) => {
 
   dbConnection.connect((err) => {
     if (err) throw err;
-    console.log("MYSQL CONNECTED");
   });
 
   dbConnection.query(query, (err, data) => {
     if (err) return res.send(err);
-    console.log(data);
     return res.json(data);
   });
   dbConnection.end((err) => {
     if (err) throw err;
-    console.log("MYSQL DISCONNECTED");
   });
 };

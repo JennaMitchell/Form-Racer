@@ -8,6 +8,7 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 10px;
+  font-size: inherit;
 }
 .inputLabel {
   left: -10px;
@@ -16,7 +17,8 @@
   position: absolute;
   transition: all 0.5s;
   padding: 1.5px;
-  background-color: var(--main800);
+  background-color: var(--black);
+  color: var(--white);
 }
 .labelMovedOut {
   font-size: var(--r10);
@@ -41,7 +43,7 @@
   width: max(100%, 100%);
   height: max-content;
   max-height: max-content;
-  font-size: var(--r16);
+  font-size: inherit;
 
   border-radius: 5px;
   padding: 10px 10px;
@@ -53,8 +55,8 @@
 
 .generatedInputQuestion {
   font-family: var(--mainFamilyFont);
-  font-size: var(--r12);
-  line-height: var(--r12);
+  font-size: inherit;
+  line-height: inherit;
   color: var(--white);
 
   width: max(100%, 100%);
@@ -70,4 +72,25 @@
 }
 .astroidDestroyTrigger {
   z-index: 1000;
+}
+@media (max-width: 950px) {
+  .inputLabel {
+    left: -5px;
+    top: -5px;
+    font-size: var(--r10);
+  }
+}
+@media (max-width: 650px) {
+  .inputLabel {
+    left: -5px;
+    top: -3.5px;
+    font-size: var(--r8);
+  }
+}
+@media (max-width: 480px) {
+  .inputLabel {
+    left: -5px;
+    top: -3.5px;
+    font-size: var(--r6);
+  }
 }

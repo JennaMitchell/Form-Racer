@@ -17,7 +17,7 @@ export const updateActiveQuestionNumber = (
 ) => {
   const newQuestionNumber = currentQuestionNumber + 1;
 
-  if (numberOfQuestions <= newQuestionNumber) {
+  if (numberOfQuestions < newQuestionNumber) {
     dispatch(formStoreActions.setEndOfTestReached(true));
     dispatch(formStoreActions.setStartQuestionTimer(false));
   } else {

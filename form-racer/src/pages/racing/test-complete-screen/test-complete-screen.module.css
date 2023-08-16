@@ -58,3 +58,51 @@
     opacity: 1;
   }
 }
+@media (max-width: 950px) {
+  .testString {
+    font-size: var(--r28);
+    line-height: var(--r28);
+    color: white;
+  }
+
+  .playAgainButton {
+    font-size: var(--r20);
+  }
+}
+@media (max-width: 680px) {
+  .testString {
+    font-size: var(--r22);
+    line-height: var(--r22);
+    color: white;
+  }
+
+  .playAgainButton {
+    font-size: var(--r18);
+  }
+}
+@media (max-width: 580px) {
+  .testString {
+    font-size: var(--r18);
+    line-height: var(--r18);
+    color: white;
+  }
+
+  .playAgainButton {
+    font-size: var(--r12);
+  }
+}
+
+@media (max-width: 422px) {
+  .testString {
+    font-size: var(--r12);
+    line-height: var(--r12);
+    color: white;
+  }
+
+  .playAgainButton {
+    font-size: var(--r12);
+  }
+  .testCompleteMainContainer {
+    gap: 20px;
+  }
+}

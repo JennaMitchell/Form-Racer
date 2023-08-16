@@ -118,3 +118,27 @@
   color: red;
   font-family: var(--mainFamilyFont);
 }
+@media (max-height: 840px) {
+  .popupMainContainer {
+    height: max(80vh, 80vh);
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: max-content;
+    grid-auto-flow: row;
+    align-items: center;
+    justify-items: center;
+  }
+}
+@media (max-height: 400px) {
+  .popupMainContainer {
+    height: max(80vh, 80vh);
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: max-content;
+    grid-auto-flow: row;
+    align-items: center;
+    justify-items: center;
+  }
+}

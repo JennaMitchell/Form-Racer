@@ -27,3 +27,14 @@
 .astroidImagePhasedOut {
   visibility: hidden;
 }
+@media (max-width: 775px) {
+  .astroidExplosionMainContainer {
+    width: max(140%, 140%);
+    height: max(400%, 400%);
+  }
+}
+@media (max-width: 480px) {
+  .astroidExplosionMainContainer {
+    height: max(300%, 300%);
+  }
+}

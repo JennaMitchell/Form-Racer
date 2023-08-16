@@ -26,13 +26,14 @@ const GameSetupPopup = (): JSX.Element => {
     difficulty: string;
     numberOfQuestions: number;
     selectedQuestionTypes: string[];
-    timerPerQuestionInSeconds: number;
+    timePerQuestionInSeconds: number;
   }>({
     difficulty: "",
     numberOfQuestions: 5,
     selectedQuestionTypes: [],
-    timerPerQuestionInSeconds: 30,
+    timePerQuestionInSeconds: 30,
   });
+
   const [submitButtonActive, setSubmitButtonActive] = useState(false);
   const questionTypesButtonData = [
     {
@@ -69,7 +70,7 @@ const GameSetupPopup = (): JSX.Element => {
       buttonName: "Checkbox",
       icon: PictureInputsIcon,
       altText: "pictures input icon",
-      id: "popup-input-type-button-check box",
+      id: "popup-input-type-button-checkbox",
     },
   ];
   const arrayOfAcceptedValues = useMemo(() => {
@@ -110,7 +111,7 @@ const GameSetupPopup = (): JSX.Element => {
       setGameSetupFormData({
         ...gameSetupFormData,
         difficulty: selectedDifficultyLevel,
-        timerPerQuestionInSeconds: timePerQuestionInSeconds,
+        timePerQuestionInSeconds: timePerQuestionInSeconds,
       });
     }
   };
@@ -179,11 +180,10 @@ const GameSetupPopup = (): JSX.Element => {
     );
 
     if (difficultyCheck) {
-      const numberOfQuestionsCheck =
-        gameSetupFormData.numberOfQuestions >= 1 ? true : false;
+      const numberOfQuestionsCheck = gameSetupFormData.numberOfQuestions >= 1;
       if (numberOfQuestionsCheck) {
         const selectedQuestionsTypeCheck =
-          gameSetupFormData.selectedQuestionTypes.length !== 0 ? true : false;
+          gameSetupFormData.selectedQuestionTypes.length !== 0;
         if (selectedQuestionsTypeCheck) {
           setSubmitButtonActive(true);
         }
@@ -324,7 +324,7 @@ const GameSetupPopup = (): JSX.Element => {
           className={`${classes.startButton} ${
             submitButtonActive && classes.activeStartButton
           }`}
-          disabled={submitButtonActive}
+          disabled={!submitButtonActive}
           onClick={startButtonHandler}
         >
           Start
