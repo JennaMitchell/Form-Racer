@@ -1,5 +1,5 @@
 import classes from "./animated-board.module.css";
-import { LeaderboardRetrievedDataType } from "../../../../../assets/api-calls/form-api-calls";
+import { LeaderboardRetrievedDataType } from "../../../../../assets/sql-api-calls/form-api-calls";
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import {
   useAppDispatch,
@@ -8,7 +8,7 @@ import {
 import { popupsStoreActions } from "../../../../../store/popups-store";
 
 import { leaderboardDatabaseNameGenerator } from "../../../../../assets/general-functions/general-functions";
-import { updateLeaderboardData } from "../../../../../assets/api-calls/form-api-calls";
+import { updateLeaderboardData } from "../../../../../assets/sql-api-calls/form-api-calls";
 
 type AnimatedBoardPropTypes = {
   previousLeaderboardData: LeaderboardRetrievedDataType[];

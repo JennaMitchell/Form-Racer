@@ -4,13 +4,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../store/typescript-hooks";
-import { getLeaderboardData } from "../../../../assets/api-calls/form-api-calls";
+import { getLeaderboardData } from "../../../../assets/sql-api-calls/form-api-calls";
 import { popupsStoreActions } from "../../../../store/popups-store";
 import {
   acceptedNumberOfQuestionsValues,
   acceptedDifficultyLevels,
 } from "../../../../assets/constants/constants";
-import { LeaderboardRetrievedDataType } from "../../../../assets/api-calls/form-api-calls";
+import { LeaderboardRetrievedDataType } from "../../../../assets/sql-api-calls/form-api-calls";
 
 import { capitalizeFirstLetter } from "../../../../assets/general-functions/general-functions";
 const StaticLeaderboard = (): JSX.Element => {

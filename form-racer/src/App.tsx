@@ -9,6 +9,14 @@ import ChangeRacerPopup from "./components/popups/change-racer/change-racer-popu
 import GameSetupPopup from "./components/popups/game-setup/game-setup-popup";
 // import ServerMessagePopup from "./components/popups/server-message/server-message-popup";
 import ResetButton from "./components/reset-button/reset-button";
+import {
+  addQuestionDataEntry,
+  getAllQuestionFromSelectedDatabase,
+} from "./utilities/db-requests/questions/questions";
+import { acceptedDatabaseObject } from "./assets/constants/constants";
+
+import { checkboxQuestionData } from "./database-setup/questions-data/checkbox-question-data";
+
 function App() {
   const lockViewportActive = useAppSelector(
     (state) => state.popups.lockViewportActive
@@ -54,8 +62,40 @@ function App() {
       }
     }
   }, [lockViewportActive]);
+
+  const dataCreationTestFunction = () => {
+    for (
+      let indexOfCheckboxQuestion = 0;
+      indexOfCheckboxQuestion < checkboxQuestionData.length;
+      indexOfCheckboxQuestion++
+    ) {
+      addQuestionDataEntry(
+        "checkbox",
+        checkboxQuestionData[indexOfCheckboxQuestion]
+      );
+    }
+
+    getAllQuestionFromSelectedDatabase(
+      acceptedDatabaseObject.checkbox.databaseName
+    );
+  };
+
   return (
     <div className="App">
+      <button
+        onClick={dataCreationTestFunction}
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "200px",
+          width: "300px",
+          height: "200px",
+          backgroundColor: "white",
+          zIndex: "100",
+        }}
+      >
+        Test
+      </button>
       {signupPopupActive && <SignupPopup />}
       {loginPoupActive && <LoginPopup />}
       {changeRacerPopupActive && <ChangeRacerPopup />}

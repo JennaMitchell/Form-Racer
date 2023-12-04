@@ -8,6 +8,7 @@ dotenv.config({ path: "./vars.env" });
 
 const questionDataRoutes = require("./routes/question-data-routes");
 const leaderboardDataRoutes = require("./routes/leaderboard-router");
+const port = process.env.PORT || 8800;
 
 app.use(cors());
 app.use(express.json());
@@ -18,6 +19,6 @@ app.use("/leaderboard-data", leaderboardDataRoutes);
 
 // Leader Board
 
-app.listen(8800, () => {
+app.listen(port, () => {
   console.log("Connected to backend.");
 });
