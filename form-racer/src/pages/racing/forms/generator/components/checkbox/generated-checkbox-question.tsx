@@ -58,6 +58,8 @@ const GeneratedCheckboxQuestion = ({
   const testResetTriggered = useAppSelector(
     (state) => state.formRacing.testResetTriggered
   );
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
 
   const timePerQuestionInSeconds = useMemo(() => {
     return gameSettings.timePerQuestionInSeconds;
@@ -159,6 +161,7 @@ const GeneratedCheckboxQuestion = ({
           updateUserAnswers(dispatch, userAnswersArray, questionNumber, true);
           setClickedCheckedBoxArray([]);
           errorMessage.length !== 0 && setErrorMessage("");
+          setQuestionAnsweredCorrectly(true);
         } else {
           decreaseLivesTracker(dispatch, userLivesArray);
           setErrorMessage("Incorrect Try Again");
@@ -226,6 +229,7 @@ const GeneratedCheckboxQuestion = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
         },
 
         100
@@ -260,7 +264,7 @@ const GeneratedCheckboxQuestion = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
       >
         <p className={sharedClasses.questionLabel}>
           Question {questionNumber}.

@@ -69,6 +69,8 @@ const GeneratedDate = ({
   }, [gameSettings.timePerQuestionInSeconds]);
 
   const dispatch = useAppDispatch();
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -148,6 +150,7 @@ const GeneratedDate = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
         },
 
         100
@@ -379,6 +382,7 @@ const GeneratedDate = ({
           questionNumber,
           inputValue
         );
+        setQuestionAnsweredCorrectly(true);
 
         dispatch(formStoreActions.setFireShipWeapons(true));
         if (submitMessageActive) {
@@ -416,7 +420,7 @@ const GeneratedDate = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
       >
         <label className={sharedClasses.questionLabel} htmlFor={"date-id"}>
           Question {questionNumber}.

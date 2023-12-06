@@ -9,15 +9,15 @@ exports.createNewSliderQuestion = async (req, res, next) => {
     return res.status(401).send({
       error: errors.array(),
       message: `${errors["errors"][0].msg}`,
+      status: 401,
     });
   }
 
   try {
     if (
-      req.body.req.body.slider_lower_limit >
-        req.body.req.body.slider_higher_limit ||
-      req.body.req.body.slider_question_lower_limit >
-        req.body.req.body.slider_question_higher_limit
+      +req.body.slider_lower_limit > +req.body.slider_higher_limit ||
+      +req.body.slider_question_lower_limit >
+        +req.body.slider_question_higher_limit
     ) {
       return res.status(401).send({
         error: "Incorrect min and max",
@@ -42,6 +42,7 @@ exports.createNewSliderQuestion = async (req, res, next) => {
     return res.status(401).json({
       message: "Server Error",
       error: [{ error: err }],
+      status: 401,
     });
   }
 };

@@ -1,5 +1,4 @@
 type DatabaseEntryType = {
-  date_question_data_id: number;
   question_text: string;
   start_date: string;
   end_date: string;

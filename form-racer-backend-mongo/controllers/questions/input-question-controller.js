@@ -1,21 +1,7 @@
 const InputQuestionSchema = require("../../models/questions/input-question-model");
 
 const { validationResult } = require("express-validator");
-exports.getAllInputQuestionData = async (req, res) => {
-  try {
-    const result = await InputQuestionSchema.find();
-    return res.status(201).json({
-      message: "Data Retrieved!",
-      retrievedData: result,
-      status: 201,
-    });
-  } catch (err) {
-    return res.status(401).json({
-      message: `Server Error!`,
-      error: [{ error: "Server Error" }],
-    });
-  }
-};
+
 exports.createNewInputQuestion = async (req, res, next) => {
   const errors = validationResult(req);
 
@@ -28,7 +14,7 @@ exports.createNewInputQuestion = async (req, res, next) => {
 
   try {
     if (
-      req.body.min_number_of_characters >= req.body.max_number_of_characters
+      +req.body.min_number_of_characters >= +req.body.max_number_of_characters
     ) {
       return res.status(401).send({
         error: "Incorrect min and max",
@@ -45,6 +31,7 @@ exports.createNewInputQuestion = async (req, res, next) => {
       input_required: req.body.input_required,
       min_number_of_characters: req.body.min_number_of_characters,
       max_number_of_characters: req.body.max_number_of_characters,
+      label: req.body.label,
     });
 
     await newInputQuestion.save();
@@ -57,6 +44,7 @@ exports.createNewInputQuestion = async (req, res, next) => {
     return res.status(401).json({
       message: "Server Error",
       error: [{ error: err }],
+      status: 401,
     });
   }
 };

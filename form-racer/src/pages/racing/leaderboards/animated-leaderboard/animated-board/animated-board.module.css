@@ -76,6 +76,9 @@
   color: white;
   font-weight: bold;
 }
+.hideLeaderboardRowEntry {
+  opacity: 0;
+}
 
 .hideOldLeaderboard {
   opacity: 0;

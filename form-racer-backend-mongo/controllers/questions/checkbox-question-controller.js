@@ -11,7 +11,7 @@ exports.createNewCheckboxQuestion = async (req, res, next) => {
       message: `${errors["errors"][0].msg}`,
     });
   }
-  console.log(14);
+
   try {
     const newCheckboxQuestion = new CheckboxQuestionSchema({
       question: req.body.question,
@@ -33,10 +33,10 @@ exports.createNewCheckboxQuestion = async (req, res, next) => {
       status: 201,
     });
   } catch (err) {
-    console.log(err);
     return res.status(401).json({
       message: "Server Error",
       error: [{ error: err }],
+      status: 401,
     });
   }
 };

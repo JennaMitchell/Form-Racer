@@ -66,6 +66,8 @@ const GeneratedInput = ({
   const activeQuestionNumberUpdated = useAppSelector(
     (state) => state.formRacing.activeQuestionNumberUpdated
   );
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
 
   const timePerQuestionInSeconds = useMemo(() => {
     return gameSettings.timePerQuestionInSeconds;
@@ -183,8 +185,6 @@ const GeneratedInput = ({
 
       const patternMet = regexPattern.test(notNullTargetElement.value);
 
-      if (patternMet) {
-      }
       if (!patternMet && submitMessageActive) {
         setSubmitMessageActive(false);
       }
@@ -210,7 +210,7 @@ const GeneratedInput = ({
           questionNumber,
           inputValue
         );
-
+        setQuestionAnsweredCorrectly(true);
         dispatch(formStoreActions.setFireShipWeapons(true));
       } else if (!valueCorrect?.enterPressed && valueCorrect?.patternMet) {
         if (!submitMessageActive) {
@@ -278,6 +278,7 @@ const GeneratedInput = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
         },
 
         100
@@ -313,7 +314,7 @@ const GeneratedInput = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
       >
         <p className={sharedClasses.questionLabel}>
           Question {questionNumber}.

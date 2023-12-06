@@ -11,7 +11,7 @@ router.put(
     body("question_text").trim().not().isEmpty(),
     body("input_name").trim().not().isEmpty(),
     body("type").trim().not().isEmpty(),
-    body("placeholder").trim().not().isEmpty(),
+    body("label").trim().not().isEmpty(),
     body("pattern").trim().not().isEmpty(),
     body("input_required")
       .trim()
@@ -29,7 +29,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number || +value <= 0) {
+        if (typeof +value !== "number" || +value <= 0) {
           throw new Error("Invalid min_number_of_characters");
         } else {
           return true;
@@ -40,7 +40,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number || +value <= 0) {
+        if (typeof +value !== "number" || +value <= 0) {
           throw new Error("Invalid max_number_of_characters");
         } else {
           return true;

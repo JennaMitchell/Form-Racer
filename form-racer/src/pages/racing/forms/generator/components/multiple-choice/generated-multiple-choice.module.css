@@ -14,6 +14,10 @@
   font-size: var(--r12);
   color: inherit;
 }
+.multipleChoiceAnswerContainer:hover {
+  cursor: pointer;
+  border: 4px solid var(--main800);
+}
 .multipleChoiceRadioButton {
   width: max(15px, 15px);
   height: max(15px, 15px);

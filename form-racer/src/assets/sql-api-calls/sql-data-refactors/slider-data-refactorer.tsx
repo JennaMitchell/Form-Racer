@@ -1,6 +1,5 @@
 type RetrievedSliderDataType = {
-  slider_question_data_id: number;
-  slider_question: string;
+  question_text: string;
   slider_lower_limit: number;
   slider_higher_limit: number;
   slider_question_higher_limit: number;
@@ -12,7 +11,7 @@ export const sliderDataRefactorer = (
 ) => {
   return retrievedData.map((dataType, index) => {
     return {
-      questionText: dataType.slider_question,
+      questionText: dataType.question_text,
       sliderLowerLimit: dataType.slider_lower_limit,
       sliderHigherLimit: dataType.slider_higher_limit,
       sliderQuestionHigherLimit: dataType.slider_question_higher_limit,

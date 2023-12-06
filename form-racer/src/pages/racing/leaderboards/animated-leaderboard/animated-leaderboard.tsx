@@ -5,7 +5,9 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../store/typescript-hooks";
-import { getLeaderboardData } from "../../../../assets/sql-api-calls/form-api-calls";
+// import { getLeaderboardData } from "../../../../assets/sql-api-calls/form-api-calls";
+import { getAllMongoDBDataFromSelectedScoreboard } from "../../../../utilities/mongo-db-requests/scoreboard/scoreboard-api-functions";
+import { acceptedScoreboardDatabaseNames } from "../../../../assets/constants/scoreboardDataTypes";
 import { popupsStoreActions } from "../../../../store/popups-store";
 import {
   acceptedNumberOfQuestionsValues,
@@ -39,33 +41,12 @@ const AnimatedLeaderboard = ({
   >([]);
   const [usersNewRanking, setUsersNewRanking] = useState(-1);
   const dispatch = useAppDispatch();
-  const leaderBoardAPICaller = useCallback(
-    async (databaseString: string) => {
-      const retrievedLeaderBoardData = await getLeaderboardData(databaseString);
+  const leaderBoardAPICaller = useCallback(async (databaseString: string) => {
+    const retrievedLeaderBoardData =
+      await getAllMongoDBDataFromSelectedScoreboard(databaseString);
 
-      if (retrievedLeaderBoardData.errorPresent) {
-        dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-        dispatch(
-          popupsStoreActions.setServerMessageData({
-            message: `${retrievedLeaderBoardData.data}`,
-            messageType: "error",
-          })
-        );
-      } else {
-        dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-        dispatch(
-          popupsStoreActions.setServerMessageData({
-            message: `Data Retrieved`,
-            messageType: "success",
-          })
-        );
-        if (typeof retrievedLeaderBoardData.data !== "string") {
-          return retrievedLeaderBoardData.data;
-        }
-      }
-    },
-    [dispatch]
-  );
+    return retrievedLeaderBoardData;
+  }, []);
 
   const leaderboardDataRetriever = useCallback(async () => {
     const gameDifficulty = gameSettings.difficulty;
@@ -90,16 +71,19 @@ const AnimatedLeaderboard = ({
       acceptedDifficultyLevels.includes(gameDifficultyText) &&
       acceptedNumberOfQuestionsValues.includes(numberOfQuestionText)
     ) {
-      const databaseString = `${gameDifficultyText}_${numberOfQuestionText}_questions_leaderboard`;
+      const databaseStringToRetrieve = `${gameDifficulty}${numberOfQuestions}`;
+      const databaseString = `${acceptedScoreboardDatabaseNames[databaseStringToRetrieve]}`;
       const retrievedData = await leaderBoardAPICaller(databaseString);
+      console.log(retrievedData);
       if (retrievedData !== undefined) {
-        setRetrievedLeaderBoardData(retrievedData);
+        console.log(100);
+        setRetrievedLeaderBoardData(retrievedData.retrievedData);
       }
     } else {
       dispatch(popupsStoreActions.setServerMessagePopupActive(true));
       dispatch(
         popupsStoreActions.setServerMessageData({
-          message: `Leaderboard Error`,
+          message: `Leaderboard Not Retrieved`,
           messageType: "error",
         })
       );
@@ -132,11 +116,13 @@ const AnimatedLeaderboard = ({
   useEffect(() => {
     if (retrievedLeaderBoardData.length !== 0) {
       const usersNewRanking = calculateUsersRanking();
+      console.log(140);
 
       if (usersNewRanking !== -1 && usersNewRanking <= 10) {
         const copyOfRetrievedLeaderBoardData = JSON.parse(
           JSON.stringify(retrievedLeaderBoardData)
         );
+        console.log(copyOfRetrievedLeaderBoardData);
 
         copyOfRetrievedLeaderBoardData[usersNewRanking - 1] = {
           username: submittedUsername,
@@ -145,6 +131,7 @@ const AnimatedLeaderboard = ({
           ),
           ranking: usersNewRanking,
         };
+        console.log(usersNewRanking);
 
         setUsersNewRanking(usersNewRanking);
 

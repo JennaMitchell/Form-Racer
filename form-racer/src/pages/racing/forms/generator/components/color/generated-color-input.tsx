@@ -49,6 +49,9 @@ const GeneratedColorInput = ({
   // refreshing
   // issue arising when the moving backend can refrest trigger when
 
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
+
   const userAnswersArray = useAppSelector(
     (state) => state.formRacing.userAnswersArray
   );
@@ -151,6 +154,7 @@ const GeneratedColorInput = ({
       }
     } else {
       dispatch(formStoreActions.setFireShipWeapons(true));
+      setQuestionAnsweredCorrectly(true);
       // see the ship fire file to see how the astroid collison works
       updateUserAnswers(
         dispatch,
@@ -203,6 +207,7 @@ const GeneratedColorInput = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
           errorMessage.length !== 0 && setErrorMessage("");
         },
 
@@ -234,7 +239,7 @@ const GeneratedColorInput = ({
     <div
       className={`${sharedClasses.topContainer} ${
         astroidExplosionTriggered && sharedClasses.hideQuestion
-      }`}
+      } `}
       ref={topContainerRef}
       id={questionId}
     >
@@ -245,7 +250,7 @@ const GeneratedColorInput = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
       >
         <label className={sharedClasses.questionLabel}>
           Question {questionNumber}.

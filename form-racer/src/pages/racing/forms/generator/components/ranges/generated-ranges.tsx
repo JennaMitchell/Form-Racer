@@ -68,6 +68,8 @@ const GeneratedRangeInput = ({
   const testResetTriggered = useAppSelector(
     (state) => state.formRacing.testResetTriggered
   );
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
 
   const timePerQuestionInSeconds = useMemo(() => {
     return gameSettings.timePerQuestionInSeconds;
@@ -125,6 +127,7 @@ const GeneratedRangeInput = ({
       dispatch(formStoreActions.setFireShipWeapons(true));
       errorMessage.length !== 0 && setErrorMessage("");
       setSliderValue("1");
+      setQuestionAnsweredCorrectly(true);
     } else {
       decreaseLivesTracker(dispatch, userLivesArray);
       setErrorMessage("Incorrect Please Try Again");
@@ -173,6 +176,7 @@ const GeneratedRangeInput = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
           errorMessage.length !== 0 && setErrorMessage("");
         },
 
@@ -218,7 +222,7 @@ const GeneratedRangeInput = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
       >
         <label
           className={sharedClasses.questionLabel}

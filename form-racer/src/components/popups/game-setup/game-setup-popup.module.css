@@ -27,11 +27,25 @@
   transition: all 0.5s;
 }
 
+.difficultyButtonBlackIcon {
+  display: inline-block;
+}
+
+.difficultyButtonWhiteIcon {
+  display: none;
+}
+
 .popupDifficultyButton:hover {
   background-color: black;
   box-shadow: none;
   color: white;
   cursor: pointer;
+}
+.popupDifficultyButton:hover .difficultyButtonBlackIcon {
+  display: none;
+}
+.popupDifficultyButton:hover .difficultyButtonWhiteIcon {
+  display: inline-block;
 }
 .difficultyButtonIcon {
   width: max(25px, 25px);
@@ -51,6 +65,14 @@
   color: white;
   position: relative;
 }
+
+.activeDifficultyButton .difficultyButtonBlackIcon {
+  display: none;
+}
+.activeDifficultyButton .difficultyButtonWhiteIcon {
+  display: inline-block;
+}
+
 .popupNumberOfQuestions {
   width: max(100%, 100%);
   display: flex;
@@ -108,11 +130,25 @@
   align-items: center;
   gap: 10px;
 }
+.popupQuestionTypeBlackIcon {
+  display: inline-block;
+}
+
+.popupQuestionTypeWhiteIcon {
+  display: none;
+}
 .popupQuestionTypeButton:hover {
   background-color: black;
   box-shadow: none;
   color: white;
   cursor: pointer;
+}
+
+.popupQuestionTypeButton:hover .popupQuestionTypeBlackIcon {
+  display: none;
+}
+.popupQuestionTypeButton:hover .popupQuestionTypeWhiteIcon {
+  display: inline-block;
 }
 .popupQuestionTypeButton > p {
   font-size: var(--r14);
@@ -128,6 +164,15 @@
   box-shadow: none;
   color: white;
 }
+
+.popupQuestionTypeButtonActive .popupQuestionTypeBlackIcon {
+  display: none;
+}
+
+.popupQuestionTypeButtonActive .popupQuestionTypeWhiteIcon {
+  display: inline-block;
+}
+
 .startButton {
   width: max-content;
   max-width: max-content;

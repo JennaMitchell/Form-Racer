@@ -4,13 +4,14 @@ type MultipleChoiceQuestionDatabaseType = {
   possible_answer_two: string;
   possible_answer_three: string;
   possible_answer_four: string;
-  question: string;
-  correct_answer_index: number;
+  question_text: string;
+  correct_answer: number;
 };
 
 export const multipleChoiceDataRefactorer = (
   retrievedData: MultipleChoiceQuestionDatabaseType[]
 ) => {
+  console.log(retrievedData);
   return retrievedData.map((dataEntry, index) => {
     return {
       possibleAnswers: [
@@ -20,11 +21,9 @@ export const multipleChoiceDataRefactorer = (
         dataEntry.possible_answer_four,
       ],
       questionType: "multiple choice",
-      question: dataEntry.question,
+      question: dataEntry.question_text,
       correctAnswerIndex:
-        dataEntry.correct_answer_index >= 4
-          ? 0
-          : dataEntry.correct_answer_index,
+        dataEntry.correct_answer > 4 ? 0 : +dataEntry.correct_answer,
       id: `multiple-choice-question-${index}`,
     };
   });

@@ -33,7 +33,8 @@ const GeneratedMultipleChoice = ({
 }: Props): JSX.Element => {
   const [clickedQuestionIndex, setClickedQuestionIndex] = useState<number>();
   const topContainerRef = useRef<null | HTMLDivElement>(null);
-
+  const [questionAnsweredCorrectly, setQuestionAnsweredCorrectly] =
+    useState(false);
   const [resetIntermVar, setResetIntermVar] = useState(false);
   // resetIntermVar is to allow the astroid to re-render at the top of the page then trigger the move animation
 
@@ -108,6 +109,7 @@ const GeneratedMultipleChoice = ({
       dispatch(formStoreActions.setFireShipWeapons(true));
       errorMessage.length !== 0 && setErrorMessage("");
       setClickedQuestionIndex(-1);
+      setQuestionAnsweredCorrectly(true);
     } else {
       decreaseLivesTracker(dispatch, userLivesArray);
       setErrorMessage("Incorrect Please Try Again");
@@ -166,6 +168,7 @@ const GeneratedMultipleChoice = ({
           setTriggerAnimation(true);
           setResetIntermVar(false);
           setResetTimeoutTriggered(false);
+          setQuestionAnsweredCorrectly(false);
         },
 
         100
@@ -254,7 +257,7 @@ const GeneratedMultipleChoice = ({
       <div
         className={`${sharedClasses.questionContainer} ${
           astroidExplosionTriggered && sharedClasses.hideQuestion
-        }`}
+        } ${questionAnsweredCorrectly && sharedClasses.hideQuestion}`}
         id={classes.questionId}
       >
         <span className={sharedClasses.questionLabel}>

@@ -1,17 +1,29 @@
 import classes from "./game-setup-popup.module.css";
 import sharedClasses from "../shared-popups-css.module.css";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+
 import { useAppDispatch } from "../../../store/typescript-hooks";
 import { popupsStoreActions } from "../../../store/popups-store";
-import EasyDiffIcon from "../../../assets/images/icons/setup-popup/easy-diff-icon.png";
-import MediumDiffIcon from "../../../assets/images/icons/setup-popup/medium-diff-icon.png";
-import HardDiffIcon from "../../../assets/images/icons/setup-popup/hard-diff-icon.png";
-import ColorInputsIcon from "../../../assets/images/icons/setup-popup/color-inputs.png";
-import CommentInputsIcon from "../../../assets/images/icons/setup-popup/comment-inputs.png";
-import DateInputsIcon from "../../../assets/images/icons/setup-popup/date-inputs.png";
-import PictureInputsIcon from "../../../assets/images/icons/setup-popup/picture-inputs.png";
-import TextInputsIcon from "../../../assets/images/icons/setup-popup/text-inputs.png";
-import MultipleChoiceIcon from "../../../assets/images/icons/setup-popup/multiple-choice-icon.png";
+// Black Icons
+import BlackEasyDiffIcon from "../../../assets/images/icons/setup-popup/black-icons/black-easy-diff-icon.png";
+import BlackMediumDiffIcon from "../../../assets/images/icons/setup-popup/black-icons/black-medium-diff-icon.png";
+import BlackHardDiffIcon from "../../../assets/images/icons/setup-popup/black-icons/black-hard-diff-icon.png";
+import BlackColorInputsIcon from "../../../assets/images/icons/setup-popup/black-icons/black-color-inputs.png";
+import BlackCommentInputsIcon from "../../../assets/images/icons/setup-popup/black-icons/black-comment-inputs.png";
+import BlackDateInputsIcon from "../../../assets/images/icons/setup-popup/black-icons/black-date-inputs.png";
+import BlackPictureInputsIcon from "../../../assets/images/icons/setup-popup/black-icons/black-picture-inputs.png";
+import BlackTextInputsIcon from "../../../assets/images/icons/setup-popup/black-icons/black-text-inputs.png";
+import BlackMultipleChoiceIcon from "../../../assets/images/icons/setup-popup/black-icons/black-multiple-choice-icon.png";
+//White Icons
+import WhiteEasyDiffIcon from "../../../assets/images/icons/setup-popup/white-icons/white-easy-diff-icon.png";
+import WhiteMediumDiffIcon from "../../../assets/images/icons/setup-popup/white-icons/white-medium-diff-icon.png";
+import WhiteHardDiffIcon from "../../../assets/images/icons/setup-popup/white-icons/white-hard-diff-icon.png";
+import WhiteColorInputsIcon from "../../../assets/images/icons/setup-popup/white-icons/white-color-inputs.png";
+import WhiteCommentInputsIcon from "../../../assets/images/icons/setup-popup/white-icons/white-comment-inputs.png";
+import WhiteDateInputsIcon from "../../../assets/images/icons/setup-popup/white-icons/white-date-inputs.png";
+import WhitePictureInputsIcon from "../../../assets/images/icons/setup-popup/white-icons/white-picture-inputs.png";
+import WhiteTextInputsIcon from "../../../assets/images/icons/setup-popup/white-icons/white-text-inputs.png";
+import WhiteMultipleChoiceIcon from "../../../assets/images/icons/setup-popup/white-icons/white-multiple-choice-icon.png";
+
 import { useState, MouseEvent, useMemo, useCallback, useEffect } from "react";
 import { testResetFunction } from "../../../assets/test-functions/test-function";
 import { formStoreActions } from "../../../store/form-store";
@@ -38,37 +50,43 @@ const GameSetupPopup = (): JSX.Element => {
   const questionTypesButtonData = [
     {
       buttonName: "Multiple Choice",
-      icon: MultipleChoiceIcon,
+      blackIcon: BlackMultipleChoiceIcon,
+      whiteIcon: WhiteMultipleChoiceIcon,
       altText: "multiple choice input icon",
       id: "popup-input-type-button-multiple choice",
     },
     {
       buttonName: "Dates",
-      icon: DateInputsIcon,
+      blackIcon: BlackDateInputsIcon,
+      whiteIcon: WhiteDateInputsIcon,
       altText: "dates input icon",
       id: "popup-input-type-button-dates",
     },
     {
       buttonName: "Inputs",
-      icon: TextInputsIcon,
+      blackIcon: BlackTextInputsIcon,
+      whiteIcon: WhiteTextInputsIcon,
       altText: "text input icon",
       id: "popup-input-type-button-inputs",
     },
     {
       buttonName: "Color",
-      icon: ColorInputsIcon,
+      blackIcon: BlackColorInputsIcon,
+      whiteIcon: WhiteColorInputsIcon,
       altText: "color input icon",
       id: "popup-input-type-button-color",
     },
     {
       buttonName: "Slider",
-      icon: CommentInputsIcon,
+      blackIcon: BlackCommentInputsIcon,
+      whiteIcon: WhiteCommentInputsIcon,
       altText: "comments input icon",
       id: "popup-input-type-button-slider",
     },
     {
       buttonName: "Checkbox",
-      icon: PictureInputsIcon,
+      blackIcon: BlackPictureInputsIcon,
+      whiteIcon: WhitePictureInputsIcon,
       altText: "pictures input icon",
       id: "popup-input-type-button-checkbox",
     },
@@ -216,7 +234,7 @@ const GameSetupPopup = (): JSX.Element => {
           className={sharedClasses.closingPopupButton}
           onClick={closingButtonHandler}
         >
-          <XMarkIcon className={sharedClasses.closingPopupButtonIcon} />
+          X
         </button>
         <p className={sharedClasses.popupTitle}>Setup</p>
 
@@ -230,9 +248,14 @@ const GameSetupPopup = (): JSX.Element => {
           onClick={diffucultyClickButtonHandler}
         >
           <img
-            src={EasyDiffIcon}
+            src={BlackEasyDiffIcon}
             alt="easy difficulty icon"
-            className={classes.difficultyButtonIcon}
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonBlackIcon}`}
+          />
+          <img
+            src={WhiteEasyDiffIcon}
+            alt="easy difficulty icon"
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonWhiteIcon}`}
           />
           <p className={classes.popupButtonText}>Easy</p>
         </button>
@@ -245,10 +268,16 @@ const GameSetupPopup = (): JSX.Element => {
           onClick={diffucultyClickButtonHandler}
         >
           <img
-            src={MediumDiffIcon}
+            src={BlackMediumDiffIcon}
             alt="medium difficulty icon"
-            className={classes.difficultyButtonIcon}
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonBlackIcon}`}
           />
+          <img
+            src={WhiteMediumDiffIcon}
+            alt="medium difficulty icon"
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonWhiteIcon}`}
+          />
+
           <p className={classes.popupButtonText}>Medium</p>
         </button>
         <button
@@ -260,9 +289,14 @@ const GameSetupPopup = (): JSX.Element => {
           onClick={diffucultyClickButtonHandler}
         >
           <img
-            src={HardDiffIcon}
+            src={BlackHardDiffIcon}
             alt="hard dificulty icon"
-            className={classes.difficultyButtonIcon}
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonBlackIcon}`}
+          />
+          <img
+            src={WhiteHardDiffIcon}
+            alt="hard dificulty icon"
+            className={`${classes.difficultyButtonIcon} ${classes.difficultyButtonWhiteIcon}`}
           />
           <p className={classes.popupButtonText}>Hard</p>
         </button>
@@ -313,7 +347,16 @@ const GameSetupPopup = (): JSX.Element => {
                 id={buttonData.id}
                 onClick={questionTypeSelectionClickHandler}
               >
-                <img src={buttonData.icon} alt={buttonData.altText} />
+                <img
+                  src={buttonData.blackIcon}
+                  alt={buttonData.altText}
+                  className={classes.popupQuestionTypeBlackIcon}
+                />
+                <img
+                  src={buttonData.whiteIcon}
+                  alt={buttonData.altText}
+                  className={classes.popupQuestionTypeWhiteIcon}
+                />
                 <p>{buttonData.buttonName}</p>
               </button>
             );

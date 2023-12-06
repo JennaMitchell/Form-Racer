@@ -13,7 +13,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number) {
+        if (typeof +value !== "number") {
           throw new Error("Invalid slider_lower_limit");
         } else {
           return true;
@@ -24,7 +24,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number) {
+        if (typeof +value !== "number") {
           throw new Error("Invalid slider_higher_limit");
         } else {
           return true;
@@ -35,7 +35,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number) {
+        if (typeof +value !== "number") {
           throw new Error("Invalid slider_question_lower_limit");
         } else {
           return true;
@@ -46,7 +46,7 @@ router.put(
       .not()
       .isEmpty()
       .custom((value, { req }) => {
-        if (typeof +value !== number) {
+        if (typeof +value !== "number") {
           throw new Error("Invalid slider_question_higher_limit");
         } else {
           return true;

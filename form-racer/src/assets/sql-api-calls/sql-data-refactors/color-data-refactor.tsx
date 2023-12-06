@@ -110,9 +110,11 @@ export const colorDataRefactor = (
 ) => {
   const colorErrorWindow = 150;
   return retrievedData.map((dataEntry, index) => {
+    console.log(dataEntry.first_color);
     const convertedColorOne = hexColorToArrayConverter(dataEntry.first_color);
     const convertedColorTwo = hexColorToArrayConverter(dataEntry.second_color);
-
+    console.log(convertedColorOne);
+    console.log(convertedColorTwo);
     const resultColor = colorMixer(convertedColorOne, convertedColorTwo, 0.5);
     const lowerResultColor = {
       r:

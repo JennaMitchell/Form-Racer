@@ -75,6 +75,7 @@ exports.getAllQuestionDataFromSelectedDB = async (req, res) => {
     return res.status(401).json({
       message: `Server Error!`,
       error: [{ error: "Server Error" }],
+      status: 401,
     });
   }
 };
@@ -82,7 +83,8 @@ exports.getAllQuestionDataFromSelectedDBWithLimit = async (req, res) => {
   const databaseLimitPair = req.params.databaseLimitPair;
 
   try {
-    const { database, limit } = databaseLimitPair.split("-");
+    const [database, limit] = databaseLimitPair.split("-");
+
     let validDatabaseName = false;
     let validLimit = false;
     let results;
@@ -94,28 +96,34 @@ exports.getAllQuestionDataFromSelectedDBWithLimit = async (req, res) => {
     if (validLimit) {
       switch (database) {
         case "multiple_choice_question_db": {
-          results = await MultipleChoiceQuestionSchema.find();
+          results = await MultipleChoiceQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         case "checkbox_question_db": {
           results = await CheckboxQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         case "input_question_db": {
           results = await InputQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         case "color_question_db": {
           results = await ColorQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         case "date_question_db": {
           results = await DateQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         case "slider_question_db": {
           results = await SliderQuestionSchema.find().limit(+limit);
           validDatabaseName = true;
+          break;
         }
         default: {
         }
@@ -124,12 +132,15 @@ exports.getAllQuestionDataFromSelectedDBWithLimit = async (req, res) => {
     if (!validDatabaseName) {
       return res.status(401).json({
         message: "Invalid Database Name",
-        error: [{ error: "Invalid Database Name" }],
+        error: [
+          { error: "Server Error: Invalid Database Name or Question Number" },
+        ],
+        status: 401,
       });
     } else {
       return res.status(201).json({
         message: "Data Retrieved!",
-        retrievedData: result,
+        retrievedData: results,
         status: 201,
       });
     }
@@ -137,6 +148,7 @@ exports.getAllQuestionDataFromSelectedDBWithLimit = async (req, res) => {
     return res.status(401).json({
       message: `Server Error!`,
       error: [{ error: "Server Error" }],
+      status: 401,
     });
   }
 };

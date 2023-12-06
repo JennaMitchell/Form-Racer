@@ -5,10 +5,10 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../store/typescript-hooks";
-import { popupsStoreActions } from "../../../../../store/popups-store";
-
-import { leaderboardDatabaseNameGenerator } from "../../../../../assets/general-functions/general-functions";
-import { updateLeaderboardData } from "../../../../../assets/sql-api-calls/form-api-calls";
+import { acceptedScoreboardDatabaseNames } from "../../../../../assets/constants/scoreboardDataTypes";
+import { updateMongoDBScoreboardEntry } from "../../../../../utilities/mongo-db-requests/scoreboard/scoreboard-api-functions";
+// import { leaderboardDatabaseNameGenerator } from "../../../../../assets/general-functions/general-functions";
+// import { updateLeaderboardData } from "../../../../../assets/sql-api-calls/form-api-calls";
 
 type AnimatedBoardPropTypes = {
   previousLeaderboardData: LeaderboardRetrievedDataType[];
@@ -21,6 +21,8 @@ const AnimatedBoard = ({
   newLeaderboardData,
   newUserRanking,
 }: AnimatedBoardPropTypes): JSX.Element => {
+  console.log(newLeaderboardData);
+  console.log(previousLeaderboardData);
   const [firstHalfOfLeaderboard, setFirstHalfOfLeaderboard] = useState<
     LeaderboardRetrievedDataType[]
   >([]);
@@ -92,8 +94,7 @@ const AnimatedBoard = ({
           tempSecondHalfArray.push(entry);
         }
       }
-      console.log(tempFirstHalfArray);
-      console.log(tempSecondHalfArray);
+
       setFirstHalfOfLeaderboard(tempFirstHalfArray);
       setSecondHalfOfLeaderboard(tempSecondHalfArray);
     }
@@ -163,7 +164,6 @@ const AnimatedBoard = ({
   useEffect(() => {
     if (fadeUserScoreIn) {
       const fadeNewUserScoreIn = setTimeout(() => {
-        console.log(showNewLeaderBoard);
         setShowNewLeaderboard(true);
         setHidePreviousLeaderboard(true);
         setFadeUserScoreIn(false);
@@ -174,7 +174,7 @@ const AnimatedBoard = ({
       };
     }
   }, [fadeUserScoreIn, showNewLeaderBoard]);
-  //Step 5. Update the SQL Database
+  //Step 5. Update the SQL/MongoDB Database
   useEffect(() => {
     if (
       showNewLeaderBoard &&
@@ -186,39 +186,15 @@ const AnimatedBoard = ({
       const usersData = newLeaderboardData[newUserRanking - 1];
 
       const updateDatabase = async () => {
-        const databaseTableName = leaderboardDatabaseNameGenerator(
-          gameSettings.difficulty,
-          gameSettings.numberOfQuestions
-        );
-        const retrievedDateData = await updateLeaderboardData(
-          databaseTableName,
-          {
-            username: usersData.username,
-            users_time: usersData.users_time,
-            ranking: usersData.ranking,
-          }
-        );
+        const scoreboardKeyValue = `${gameSettings.difficulty}${gameSettings.numberOfQuestions}`;
 
-        if (retrievedDateData.errorPresent) {
-          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-          dispatch(
-            popupsStoreActions.setServerMessageData({
-              message: `${retrievedDateData.data}`,
-              messageType: "error",
-            })
-          );
-        } else {
-          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-          dispatch(
-            popupsStoreActions.setServerMessageData({
-              message: `Data Retrieved`,
-              messageType: "success",
-            })
-          );
-          console.log(retrievedDateData.data);
-
-          // return retrievedDateData.data;
-        }
+        const databaseTableName =
+          acceptedScoreboardDatabaseNames[scoreboardKeyValue];
+        await updateMongoDBScoreboardEntry(databaseTableName, {
+          username: usersData.username,
+          users_time: usersData.users_time,
+          ranking: +usersData.ranking,
+        });
       };
       updateDatabase();
       setLeaderboardUpdated(true);
@@ -289,7 +265,7 @@ const AnimatedBoard = ({
           {firstHalfOfLeaderboard.map((entry, index) => {
             return (
               <div
-                className={classes.leaderboardRowEntry}
+                className={`${classes.leaderboardRowEntry}`}
                 id={`leaderboard-row-entry-${index + 1}`}
                 key={`leaderboard-row-entry-${index + 1}-key`}
               >
@@ -316,7 +292,7 @@ const AnimatedBoard = ({
           {secondHalfOfLeadboard.map((entry, index) => {
             return (
               <div
-                className={classes.leaderboardRowEntry}
+                className={`${classes.leaderboardRowEntry}  `}
                 id={`leaderboard-row-entry-${
                   index + 1 + firstHalfOfLeaderboard.length
                 }`}

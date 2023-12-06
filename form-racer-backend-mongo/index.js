@@ -16,7 +16,11 @@ mongoose
     console.log("connected");
   })
   .catch((err) => {
-    console.log("err");
+    return {
+      message: "Server Error",
+      error: [{ error: err }],
+      status: 401,
+    };
   });
 
 app.use(bodyParser.json());
@@ -33,10 +37,10 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.use(express.json());
-console.log(36);
+
 app.use("/questions", questionRoutes);
 app.use("/scoreboards", scoreboardRoutes);
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   console.log(5000);
 });

@@ -8,12 +8,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../store/typescript-hooks";
-import { popupsStoreActions } from "../../../../store/popups-store";
+
 import { formStoreActions } from "../../../../store/form-store";
 
 import { inputDataRefactor } from "../../../../assets/sql-api-calls/sql-data-refactors/input-data-refactor";
 import { multipleChoiceDataRefactorer } from "../../../../assets/sql-api-calls/sql-data-refactors/multiple-choice-data-refactor";
-import { getAllQuestionDataWithLimit } from "../../../../assets/sql-api-calls/form-api-calls";
+import { getMongoDBQuestionDataWithLimit } from "../../../../utilities/mongo-db-requests/questions/questions-api-functions";
 import { dateDataRefactorer } from "../../../../assets/sql-api-calls/sql-data-refactors/date-data-refactorer";
 import { colorDataRefactor } from "../../../../assets/sql-api-calls/sql-data-refactors/color-data-refactor";
 import { checkboxDataRefactor } from "../../../../assets/sql-api-calls/sql-data-refactors/checkbox-data-refactor";
@@ -21,7 +21,7 @@ import { randomNumberGeneratorWithNumberOfQuestionRemaining } from "../../../../
 import { sliderDataRefactorer } from "../../../../assets/sql-api-calls/sql-data-refactors/slider-data-refactorer";
 import { useEffect } from "react";
 import { updateActiveQuestionNumber } from "./components/shared-components-functions";
-import { acceptedQuestionDatabaseObject } from "../../../../assets/constants/constants";
+import { acceptedMongoDBAPICallObject } from "../../../../assets/constants/constants";
 
 const FormGeneratorMainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -141,34 +141,19 @@ const FormGeneratorMainPage = (): JSX.Element => {
       };
 
       const getQuestionDataWithLimit = async (
-        apiRoute: string,
+        database: string,
         numberOfQuestions: number
       ) => {
-        const retrievedDateData = await getAllQuestionDataWithLimit(
-          apiRoute,
-          numberOfQuestions
+        /// 1
+        console.log(database);
+        console.log(numberOfQuestions);
+        const retrievedData = await getMongoDBQuestionDataWithLimit(
+          `${database}-${numberOfQuestions}`
         );
 
-        if (retrievedDateData.errorPresent) {
-          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-          dispatch(
-            popupsStoreActions.setServerMessageData({
-              message: `${retrievedDateData.data}`,
-              messageType: "error",
-            })
-          );
-        } else {
-          dispatch(popupsStoreActions.setServerMessagePopupActive(true));
-          dispatch(
-            popupsStoreActions.setServerMessageData({
-              message: `Data Retrieved`,
-              messageType: "success",
-            })
-          );
-
-          return retrievedDateData.data;
-        }
+        return retrievedData.retrievedData;
       };
+
       const questionDataRetriever = async (
         arrayOfQuestionNumbers: number[],
         arrayOfQuestionTypes: string[]
@@ -185,8 +170,9 @@ const FormGeneratorMainPage = (): JSX.Element => {
 
           switch (questionType) {
             case "multiple choice":
+              console.log(arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]);
               const retrievedData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.multipleChoice,
+                acceptedMongoDBAPICallObject.multipleChoice.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
 
@@ -199,7 +185,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
               break;
             case "dates":
               const retrievedDatesData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.date,
+                acceptedMongoDBAPICallObject.date.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
               const renderReadyDateData =
@@ -210,7 +196,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
               break;
             case "inputs":
               const retrievedInputData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.input,
+                acceptedMongoDBAPICallObject.input.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
 
@@ -223,7 +209,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
               break;
             case "color":
               const retrievedColorData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.color,
+                acceptedMongoDBAPICallObject.color.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
               const renderReadyRetrievedColorData =
@@ -236,7 +222,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
 
             case "checkbox":
               const checkBoxData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.checkbox,
+                acceptedMongoDBAPICallObject.checkbox.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
               const renderReadyCheckboxData =
@@ -250,7 +236,7 @@ const FormGeneratorMainPage = (): JSX.Element => {
 
             case "slider":
               const retrievedSliderData = await getQuestionDataWithLimit(
-                acceptedQuestionDatabaseObject.slider,
+                acceptedMongoDBAPICallObject.slider.databaseName,
                 arrayOfQuestionNumbers[indexOfArrayQuestionNumbers]
               );
               const renderReadySliderData =

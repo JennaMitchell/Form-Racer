@@ -29,6 +29,7 @@ exports.createNewDateQuestion = async (req, res, next) => {
     return res.status(401).json({
       message: "Server Error",
       error: [{ error: err }],
+      status: 401,
     });
   }
 };

@@ -9,10 +9,11 @@
   flex-direction: column;
   border-radius: 10px;
   font-size: inherit;
+  padding: 7.5px 0px;
 }
 .inputLabel {
-  left: -10px;
-  top: -10px;
+  left: -5px;
+  top: -3.5px;
   font-size: var(--r12);
   position: absolute;
   transition: all 0.5s;

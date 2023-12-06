@@ -18,7 +18,6 @@ router.put(
       .isEmpty()
       .custom((value, { req }) => {
         if (value !== "true" && value !== "false") {
-          console.log("28");
           throw new Error("Invalid Boolean");
         } else {
           return true;
