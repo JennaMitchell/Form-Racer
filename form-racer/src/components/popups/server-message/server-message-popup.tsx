@@ -1,7 +1,8 @@
 import classes from "./server-message-popup.module.css";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+
 import { useAppDispatch } from "../../../store/typescript-hooks";
 import { popupsStoreActions } from "../../../store/popups-store";
+import sharedClasses from "../shared-popups-css.module.css";
 type Props = {
   messageType: string;
   message: string;
@@ -24,8 +25,11 @@ const ServerMessagePopup = ({ messageType, message }: Props) => {
       }`}
     >
       <p>{message}</p>
-      <button onClick={closingButtonClickHandler}>
-        <XMarkIcon className={classes.closingPopupButtonIcon} />
+      <button
+        onClick={closingButtonClickHandler}
+        className={sharedClasses.closingPopupButton}
+      >
+        X
       </button>
     </div>
   );

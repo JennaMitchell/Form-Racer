@@ -1,5 +1,4 @@
 import sharedClasses from "../shared-popups-css.module.css";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useAppDispatch } from "../../../store/typescript-hooks";
 import { popupsStoreActions } from "../../../store/popups-store";
 import ChangeRacerWindow from "../../change-racer-window/change-racer-window";
@@ -38,7 +37,7 @@ const ChangeRacerPopup = (): JSX.Element => {
           className={sharedClasses.closingPopupButton}
           onClick={closingButtonHandler}
         >
-          <XMarkIcon className={sharedClasses.closingPopupButtonIcon} />
+          X
         </button>
 
         <p className={sharedClasses.popupTitle}>Racer </p>
